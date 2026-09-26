@@ -1,0 +1,203 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <meta
+      name="description"
+      content="A portfolio in maritime systems, supply-chain risk, operations research, and intelligent transportation."
+    />
+    <meta name="theme-color" content="#071722" />
+    <title>sitora77 — Maritime Systems Portfolio</title>
+    <link
+      rel="icon"
+      type="image/svg+xml"
+      href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 64 64'%3E%3Crect width='64' height='64' rx='14' fill='%23071722'/%3E%3Cpath d='M13 39h38M19 31h26M26 23h12' stroke='%235eead4' stroke-width='4' stroke-linecap='round'/%3E%3Cpath d='M15 46c7 5 27 5 34 0' fill='none' stroke='%23f2c66d' stroke-width='4' stroke-linecap='round'/%3E%3C/svg%3E"
+    />
+    <link rel="stylesheet" href="styles.css" />
+    <script src="script.js" defer></script>
+  </head>
+  <body>
+    <a class="skip-link" href="#main">Skip to content</a>
+    <header class="site-header">
+      <a class="brand" href="#top" aria-label="Portfolio home">
+        <span class="brand-mark" aria-hidden="true">HS</span>
+        <span>sitora77 / maritime systems</span>
+      </a>
+      <button class="menu-button" type="button" aria-expanded="false" aria-controls="site-nav">
+        Menu
+      </button>
+      <nav id="site-nav" aria-label="Primary navigation">
+        <a href="#about">About</a>
+        <a href="#project">Project</a>
+        <a href="#method">Method</a>
+        <a href="#contact">Contact</a>
+      </nav>
+    </header>
+
+    <main id="main">
+      <section class="hero" id="top" aria-labelledby="hero-title">
+        <div class="hero-copy">
+          <p class="eyebrow">PORTFOLIO LOG / 2026</p>
+          <h1 id="hero-title">Port systems.<br />Maritime risk.<br /><span>Better decisions.</span></h1>
+          <p class="hero-summary">
+            An undergraduate background in Port, Waterway and Coastal Engineering,
+            paired with freight-forwarding and marine cargo insurance experience—now
+            developed through data analysis, simulation, and operations research.
+          </p>
+          <div class="hero-actions">
+            <a class="button button-primary" href="https://github.com/sitora77/harborshield">
+              Explore HarborShield
+            </a>
+            <a class="button button-secondary" href="#about">Read the story</a>
+          </div>
+        </div>
+        <aside class="signal-panel" aria-label="Portfolio coordinates">
+          <div class="signal-topline">
+            <span>FOCUS AREA</span>
+            <span>SG / HK</span>
+          </div>
+          <div class="route-visual" aria-hidden="true">
+            <span class="port port-a">SHA</span>
+            <span class="route-line"></span>
+            <span class="port port-b">SIN</span>
+          </div>
+          <dl class="signal-list">
+            <div><dt>Domain</dt><dd>Maritime logistics</dd></div>
+            <div><dt>Methods</dt><dd>Simulation + optimisation</dd></div>
+            <div><dt>Question</dt><dd>How do systems stay resilient?</dd></div>
+          </dl>
+        </aside>
+      </section>
+
+      <section class="section section-grid" id="about" aria-labelledby="about-title">
+        <div>
+          <p class="section-index">01 / BACKGROUND</p>
+          <h2 id="about-title">From infrastructure to operational decisions</h2>
+        </div>
+        <div class="prose">
+          <p>
+            My engineering training began with ports, waterways, and coastal systems:
+            the physical infrastructure that makes maritime trade possible. A later
+            freight-forwarding internship exposed a different layer of the same system—
+            cargo operations, insurance decisions, uncertainty, and commercial trade-offs.
+          </p>
+          <p>
+            That connection now shapes my interests in maritime digitalisation,
+            industrial and systems engineering, supply-chain resilience, and intelligent
+            transportation. I am building the quantitative foundation needed to move
+            from observing operational problems to modelling and improving them.
+          </p>
+        </div>
+      </section>
+
+      <section class="section project-section" id="project" aria-labelledby="project-title">
+        <div class="project-heading">
+          <div>
+            <p class="section-index">02 / FEATURED PROJECT</p>
+            <h2 id="project-title">HarborShield</h2>
+          </div>
+          <p class="project-deck">
+            A risk-aware decision-support prototype for maritime cargo insurance and
+            intermodal route planning.
+          </p>
+        </div>
+
+        <div class="metric-strip" aria-label="Project facts">
+          <div><strong>4</strong><span>disruption scenarios</span></div>
+          <div><strong>3</strong><span>route alternatives</span></div>
+          <div><strong>7</strong><span>automated tests</span></div>
+          <div><strong>1</strong><span>official MPA dataset</span></div>
+        </div>
+
+        <div class="project-grid">
+          <article class="project-card project-card-main">
+            <p class="card-label">DECISION QUESTION</p>
+            <h3>Which route is preferable when cost, delay, cargo loss, insurance, and carbon conflict?</h3>
+            <p>
+              HarborShield combines a transparent risk model, Monte Carlo simulation,
+              CVaR95 tail-cost measurement, multi-criteria ranking, and an OR-Tools
+              allocation model. It also displays public vessel-arrival data from the
+              Maritime and Port Authority of Singapore.
+            </p>
+            <div class="tag-list" aria-label="Project methods">
+              <span>Python</span><span>Streamlit</span><span>Monte Carlo</span>
+              <span>CVaR95</span><span>OR-Tools</span><span>Public data</span>
+            </div>
+          </article>
+          <article class="project-card">
+            <p class="card-label">RESEARCH INTEGRITY</p>
+            <h3>Clear boundaries</h3>
+            <p>
+              Official and simulated inputs are separated. Vessel-arrival volume is not
+              mislabelled as congestion. Model coefficients are not presented as
+              actuarial rates until real claims data can support calibration.
+            </p>
+            <a class="text-link" href="https://github.com/sitora77/harborshield/blob/main/docs/LITERATURE_AND_OPEN_SOURCE.md">
+              View source register <span aria-hidden="true">↗</span>
+            </a>
+          </article>
+        </div>
+      </section>
+
+      <section class="section" id="method" aria-labelledby="method-title">
+        <p class="section-index">03 / METHOD</p>
+        <div class="method-heading">
+          <h2 id="method-title">One problem, four analytical lenses</h2>
+          <p>Each layer answers a different question and remains visible enough to audit.</p>
+        </div>
+        <ol class="method-grid">
+          <li>
+            <span>01</span>
+            <h3>Risk</h3>
+            <p>Estimate how cargo, packaging, transshipment, weather, and reliability affect claim probability.</p>
+          </li>
+          <li>
+            <span>02</span>
+            <h3>Uncertainty</h3>
+            <p>Simulate thousands of cargo-loss and delay outcomes instead of relying on a single average.</p>
+          </li>
+          <li>
+            <span>03</span>
+            <h3>Preference</h3>
+            <p>Make cost, risk, time, and carbon priorities explicit through sensitivity analysis.</p>
+          </li>
+          <li>
+            <span>04</span>
+            <h3>Allocation</h3>
+            <p>Assign whole containers across routes while controlling concentration and transit constraints.</p>
+          </li>
+        </ol>
+      </section>
+
+      <section class="section direction-section" aria-labelledby="direction-title">
+        <div>
+          <p class="section-index">04 / ACADEMIC DIRECTION</p>
+          <h2 id="direction-title">Connecting four fields</h2>
+        </div>
+        <div class="direction-list">
+          <div><span>MTM</span><p>Port digitalisation, maritime data, intermodal logistics</p></div>
+          <div><span>ISE</span><p>Probability, systems modelling, optimisation, decision analysis</p></div>
+          <div><span>SCM</span><p>Supply-chain resilience, risk coordination, service trade-offs</p></div>
+          <div><span>ITS</span><p>Multimodal networks, disruption response, sustainable mobility</p></div>
+        </div>
+      </section>
+
+      <section class="section contact-section" id="contact" aria-labelledby="contact-title">
+        <p class="section-index">05 / CONTACT</p>
+        <h2 id="contact-title">Follow the work as it develops.</h2>
+        <p>
+          Code, methodology, data provenance, experiment results, and learning notes are
+          published openly on GitHub.
+        </p>
+        <a class="button button-primary" href="https://github.com/sitora77">Visit GitHub profile</a>
+      </section>
+    </main>
+
+    <footer>
+      <span>© <span id="year">2026</span> sitora77</span>
+      <span>Built around evidence, not overclaiming.</span>
+    </footer>
+  </body>
+</html>
+
