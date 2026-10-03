@@ -106,7 +106,7 @@
         <div class="metric-strip" aria-label="Project facts">
           <div><strong>4</strong><span>disruption scenarios</span></div>
           <div><strong>3</strong><span>route alternatives</span></div>
-          <div><strong>7</strong><span>automated tests</span></div>
+          <div><strong>24</strong><span>automated tests</span></div>
           <div><strong>1</strong><span>official MPA dataset</span></div>
         </div>
 
@@ -116,13 +116,13 @@
             <h3>Which route is preferable when cost, delay, cargo loss, insurance, and carbon conflict?</h3>
             <p>
               HarborShield combines a transparent risk model, Monte Carlo simulation,
-              CVaR95 tail-cost measurement, multi-criteria ranking, and an OR-Tools
-              allocation model. It also displays public vessel-arrival data from the
+              joint batch CVaR, whole-container allocation, and independent synthetic
+              evaluation against four policy alternatives. It also displays public vessel-arrival data from the
               Maritime and Port Authority of Singapore.
             </p>
             <div class="tag-list" aria-label="Project methods">
               <span>Python</span><span>Streamlit</span><span>Monte Carlo</span>
-              <span>CVaR95</span><span>OR-Tools</span><span>Public data</span>
+              <span>Joint CVaR95</span><span>Held-out experiments</span><span>Public data</span>
             </div>
           </article>
           <article class="project-card">
@@ -138,6 +138,20 @@
             </a>
           </article>
         </div>
+        <article class="project-card evidence-card">
+          <p class="card-label">v0.2 / EXPERIMENT EVIDENCE</p>
+          <h3>Test the decision—not just the dashboard.</h3>
+          <p>
+            Four disruption regimes, 10,000 held-out synthetic worlds per regime,
+            five training seeds, paired uncertainty intervals, and shared-shock sensitivity.
+            Baselines can coincide; the experiment does not assume that a more complex method wins.
+          </p>
+          <a class="button button-primary" href="experiment.html">Read the experiment evidence</a>
+          <p class="evidence-note">
+            This is a static evidence page, not a hosted Python application.
+            Built with AI-assisted coding; synthetic evaluation is not real-world validation.
+          </p>
+        </article>
       </section>
 
       <section class="section" id="method" aria-labelledby="method-title">
@@ -165,7 +179,7 @@
           <li>
             <span>04</span>
             <h3>Allocation</h3>
-            <p>Assign whole containers across routes while controlling concentration and transit constraints.</p>
+            <p>Assign whole containers under joint batch risk, then evaluate frozen decisions on separate synthetic samples.</p>
           </li>
         </ol>
       </section>
@@ -200,4 +214,3 @@
     </footer>
   </body>
 </html>
-

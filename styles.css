@@ -266,6 +266,8 @@ h3 { line-height: 1.25; }
 }
 .direction-list span { color: var(--gold); font-weight: 800; }
 .direction-list p { margin: 0; color: var(--muted); }
+.evidence-card { margin-top: 1.25rem; }
+.evidence-card .evidence-note { color: var(--muted); font-size: 0.9rem; margin-bottom: 0; }
 .contact-section { max-width: 850px; }
 .contact-section > p:not(.section-index) { color: var(--muted); font-size: 1.1rem; }
 footer {
@@ -316,4 +318,3 @@ footer {
 @media (prefers-reduced-motion: reduce) {
   html { scroll-behavior: auto; }
 }
-
