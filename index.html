@@ -106,8 +106,8 @@
         <div class="metric-strip" aria-label="Project facts">
           <div><strong>4</strong><span>disruption scenarios</span></div>
           <div><strong>3</strong><span>route alternatives</span></div>
-          <div><strong>68</strong><span>automated tests</span></div>
-          <div><strong>1</strong><span>official MPA dataset</span></div>
+          <div><strong>92</strong><span>automated tests</span></div>
+          <div><strong>2</strong><span>public data sources</span></div>
         </div>
 
         <div class="project-grid">
@@ -138,6 +138,23 @@
             </a>
           </article>
         </div>
+        <article class="project-card evidence-card">
+          <p class="card-label">v0.5 / REAL-DATA FORECAST TEST</p>
+          <h3>1,096 observed days. A forecast you can audit.</h3>
+          <p>
+            Real AIS-derived Singapore container-ship port calls from IMF PortWatch.
+            Train on 2022, select the method on 2023, then test on 366 days in 2024.
+            The selected 28-day mean has MAE 3.29 calls/day versus 4.80 for yesterday's count;
+            the fixed ridge model does not beat this simple baseline.
+          </p>
+          <a class="button button-primary" href="real-data-en.html">Read the real-data evidence</a>
+          <a class="text-link" href="real-data.html">中文真实数据实验</a>
+          <p class="evidence-note">
+            Source snapshots and reproducible tests are public. Port calls are activity indicators,
+            not measured waiting times or cargo losses. Historical records were retrieved later;
+            no live-deployment performance or financial benefit is claimed. AI-assisted implementation.
+          </p>
+        </article>
         <article class="project-card evidence-card">
           <p class="card-label">v0.4 / BILINGUAL PUBLIC-EVENT CASE</p>
           <h3>Port delay, stockouts and the cash needed before collection.</h3>

@@ -1,0 +1,2495 @@
+{
+  "version": "0.5",
+  "task": "One-day-ahead Singapore container-ship port-call forecasting",
+  "unit": "AIS-derived container-ship port calls per UTC day; not unique vessels or TEU",
+  "source": {
+    "dataset": "https://portwatch.imf.org/datasets/83b1bbc7b3354c5fb1f40673bb8f852e/about",
+    "attribution": "Sources: UN Global Platform; IMF PortWatch (portwatch.imf.org).",
+    "terms": "https://www.imf.org/en/about/copyright-and-terms",
+    "retrieved_at_utc": "2026-10-04T14:34:46+00:00",
+    "snapshot_sha256": "3238a37352ae993c4cb4e44848268aab621978f835a74ef1528e8e2e073f0985",
+    "portid": "port1201"
+  },
+  "quality": {
+    "rows": 1096,
+    "start": "2022-01-01",
+    "end": "2024-12-31",
+    "missing_dates": 0,
+    "duplicate_dates": 0,
+    "invalid_counts": 0,
+    "zero_count_days": 0,
+    "source_hashes_verified": true
+  },
+  "splits": {
+    "train": {
+      "start": "2022-01-01",
+      "end": "2022-12-31",
+      "n": 365
+    },
+    "validation": {
+      "start": "2023-01-01",
+      "end": "2023-12-31",
+      "n": 365
+    },
+    "test": {
+      "start": "2024-01-01",
+      "end": "2024-12-31",
+      "n": 366
+    }
+  },
+  "protocol": "Choose by 2023 validation MAE. Refit ridge on 2022–2023 only; freeze coefficients. Each 2024 forecast uses observed earlier days, not the current or future target. This is rolling one-day-ahead evaluation, not a year-ahead forecast. Historical records downloaded later may be revised; this is not an as-of-2024 vintage backtest.",
+  "selected_method": "mean_28",
+  "method_names": {
+    "yesterday": "Yesterday's observed count",
+    "last_week": "Same weekday last week",
+    "mean_28": "Previous 28-day mean",
+    "weekday_4": "Same weekday, previous four weeks",
+    "ridge_ar": "Ridge autoregression (fixed penalty 10)"
+  },
+  "validation": {
+    "yesterday": {
+      "n": 365,
+      "mae": 4.8,
+      "rmse": 5.96978694463911,
+      "wape": 0.11724553302549688,
+      "bias": 0.038356164383561646
+    },
+    "last_week": {
+      "n": 365,
+      "mae": 4.53972602739726,
+      "rmse": 5.55791426336392,
+      "wape": 0.11088804122331526,
+      "bias": 0.052054794520547946
+    },
+    "mean_28": {
+      "n": 365,
+      "mae": 3.456849315068493,
+      "rmse": 4.262989736425731,
+      "wape": 0.08443752927792278,
+      "bias": -0.004990215264187842
+    },
+    "weekday_4": {
+      "n": 365,
+      "mae": 3.6047945205479452,
+      "rmse": 4.437677258663004,
+      "wape": 0.08805126146021548,
+      "bias": -0.02671232876712329
+    },
+    "ridge_ar": {
+      "n": 365,
+      "mae": 3.934591842685459,
+      "rmse": 4.931215388897006,
+      "wape": 0.09610694121529763,
+      "bias": -2.433528870129848
+    }
+  },
+  "test": {
+    "yesterday": {
+      "n": 366,
+      "mae": 4.795081967213115,
+      "rmse": 5.9480905693142425,
+      "wape": 0.12855259302666275,
+      "bias": -0.00819672131147541
+    },
+    "last_week": {
+      "n": 366,
+      "mae": 4.598360655737705,
+      "rmse": 5.846160759713618,
+      "wape": 0.12327864049223557,
+      "bias": -0.030054644808743168
+    },
+    "mean_28": {
+      "n": 366,
+      "mae": 3.290593286494926,
+      "rmse": 4.174823342210301,
+      "wape": 0.08821836674898498,
+      "bias": 0.026541764246682184
+    },
+    "weekday_4": {
+      "n": 366,
+      "mae": 3.6530054644808745,
+      "rmse": 4.631355476738162,
+      "wape": 0.09793436859068268,
+      "bias": 0.04781420765027322
+    },
+    "ridge_ar": {
+      "n": 366,
+      "mae": 3.4616092817730393,
+      "rmse": 4.396893493468548,
+      "wape": 0.092803178811085,
+      "bias": 0.69003791485605
+    }
+  },
+  "mae_improvement_vs_yesterday": 0.3137566137566137,
+  "final_ridge_fit": {
+    "mean": [
+      38.856125356125354,
+      38.851851851851855,
+      38.819088319088316,
+      38.73361823361823,
+      38.54415954415954,
+      0.14245014245014245,
+      0.14245014245014245,
+      0.14245014245014245,
+      0.14245014245014245,
+      0.14387464387464388,
+      0.14387464387464388
+    ],
+    "scale": [
+      5.064044061033843,
+      5.067717023463724,
+      5.105165282255934,
+      5.13204371214541,
+      5.127731855337573,
+      0.3495112292417487,
+      0.3495112292417487,
+      0.3495112292417487,
+      0.3495112292417487,
+      0.35096257738480807,
+      0.35096257738480807
+    ],
+    "coefficients": [
+      38.85897435897436,
+      0.33337777716346595,
+      0.3678494916938891,
+      0.610835899904915,
+      0.9674634374464894,
+      0.9623771961353165,
+      0.25826276259705544,
+      0.2109205377890524,
+      -0.13946620197817464,
+      -0.023059677874661372,
+      -0.1443966972795752,
+      -0.1963057429898169
+    ],
+    "trained_through": "2023-12-31"
+  },
+  "monthly": [
+    {
+      "month": "2024-01",
+      "actual_mean": 40.0,
+      "predicted_mean": 39.9573732718894,
+      "n": 31,
+      "mae": 3.247695852534562,
+      "rmse": 4.626491005683983,
+      "wape": 0.08119239631336404,
+      "bias": -0.04262672811059924
+    },
+    {
+      "month": "2024-02",
+      "actual_mean": 39.06896551724138,
+      "predicted_mean": 39.26108374384236,
+      "n": 29,
+      "mae": 3.0837438423645316,
+      "rmse": 3.5788592649450326,
+      "wape": 0.07893077795990416,
+      "bias": 0.19211822660098515
+    },
+    {
+      "month": "2024-03",
+      "actual_mean": 37.32258064516129,
+      "predicted_mean": 38.3594470046083,
+      "n": 31,
+      "mae": 2.9838709677419355,
+      "rmse": 3.8973201913786495,
+      "wape": 0.07994814174589455,
+      "bias": 1.0368663594470047
+    },
+    {
+      "month": "2024-04",
+      "actual_mean": 36.666666666666664,
+      "predicted_mean": 37.34166666666667,
+      "n": 30,
+      "mae": 3.403571428571428,
+      "rmse": 4.42006190894557,
+      "wape": 0.09282467532467531,
+      "bias": 0.675
+    },
+    {
+      "month": "2024-05",
+      "actual_mean": 35.935483870967744,
+      "predicted_mean": 35.72004608294932,
+      "n": 31,
+      "mae": 3.0933179723502304,
+      "rmse": 3.9597163020714072,
+      "wape": 0.08607976404206207,
+      "bias": -0.21543778801843325
+    },
+    {
+      "month": "2024-06",
+      "actual_mean": 33.06666666666667,
+      "predicted_mean": 34.24880952380952,
+      "n": 30,
+      "mae": 3.6940476190476192,
+      "rmse": 4.625953661561211,
+      "wape": 0.11171514976958527,
+      "bias": 1.182142857142857
+    },
+    {
+      "month": "2024-07",
+      "actual_mean": 35.41935483870968,
+      "predicted_mean": 34.66589861751152,
+      "n": 31,
+      "mae": 3.158986175115207,
+      "rmse": 4.102978253221934,
+      "wape": 0.08918813427010147,
+      "bias": -0.7534562211981564
+    },
+    {
+      "month": "2024-08",
+      "actual_mean": 37.25806451612903,
+      "predicted_mean": 36.44930875576037,
+      "n": 31,
+      "mae": 3.202764976958525,
+      "rmse": 4.028688676922414,
+      "wape": 0.08596165739022882,
+      "bias": -0.8087557603686635
+    },
+    {
+      "month": "2024-09",
+      "actual_mean": 36.9,
+      "predicted_mean": 37.23571428571429,
+      "n": 30,
+      "mae": 3.533333333333333,
+      "rmse": 4.35921106261619,
+      "wape": 0.0957542908762421,
+      "bias": 0.3357142857142854
+    },
+    {
+      "month": "2024-10",
+      "actual_mean": 39.064516129032256,
+      "predicted_mean": 37.763824884792626,
+      "n": 31,
+      "mae": 3.5195852534562215,
+      "rmse": 4.06568942254316,
+      "wape": 0.09009673233455232,
+      "bias": -1.3006912442396317
+    },
+    {
+      "month": "2024-11",
+      "actual_mean": 38.46666666666667,
+      "predicted_mean": 38.527380952380945,
+      "n": 30,
+      "mae": 3.6059523809523806,
+      "rmse": 4.540366006104327,
+      "wape": 0.09374226293637038,
+      "bias": 0.060714285714285644
+    },
+    {
+      "month": "2024-12",
+      "actual_mean": 38.41935483870968,
+      "predicted_mean": 38.45622119815669,
+      "n": 31,
+      "mae": 2.9815668202764978,
+      "rmse": 3.7378506284502144,
+      "wape": 0.07760585342449322,
+      "bias": 0.03686635944700402
+    }
+  ],
+  "forecasts": [
+    {
+      "date": "2024-01-01",
+      "actual": 42,
+      "predicted": 40.892857142857146,
+      "yesterday": 32.0
+    },
+    {
+      "date": "2024-01-02",
+      "actual": 36,
+      "predicted": 40.82142857142857,
+      "yesterday": 42.0
+    },
+    {
+      "date": "2024-01-03",
+      "actual": 45,
+      "predicted": 40.32142857142857,
+      "yesterday": 36.0
+    },
+    {
+      "date": "2024-01-04",
+      "actual": 47,
+      "predicted": 40.357142857142854,
+      "yesterday": 45.0
+    },
+    {
+      "date": "2024-01-05",
+      "actual": 37,
+      "predicted": 40.392857142857146,
+      "yesterday": 47.0
+    },
+    {
+      "date": "2024-01-06",
+      "actual": 37,
+      "predicted": 40.392857142857146,
+      "yesterday": 37.0
+    },
+    {
+      "date": "2024-01-07",
+      "actual": 39,
+      "predicted": 40.07142857142857,
+      "yesterday": 37.0
+    },
+    {
+      "date": "2024-01-08",
+      "actual": 46,
+      "predicted": 39.82142857142857,
+      "yesterday": 39.0
+    },
+    {
+      "date": "2024-01-09",
+      "actual": 40,
+      "predicted": 40.035714285714285,
+      "yesterday": 46.0
+    },
+    {
+      "date": "2024-01-10",
+      "actual": 40,
+      "predicted": 40.035714285714285,
+      "yesterday": 40.0
+    },
+    {
+      "date": "2024-01-11",
+      "actual": 38,
+      "predicted": 39.785714285714285,
+      "yesterday": 40.0
+    },
+    {
+      "date": "2024-01-12",
+      "actual": 40,
+      "predicted": 39.607142857142854,
+      "yesterday": 38.0
+    },
+    {
+      "date": "2024-01-13",
+      "actual": 30,
+      "predicted": 39.714285714285715,
+      "yesterday": 40.0
+    },
+    {
+      "date": "2024-01-14",
+      "actual": 38,
+      "predicted": 39.17857142857143,
+      "yesterday": 30.0
+    },
+    {
+      "date": "2024-01-15",
+      "actual": 47,
+      "predicted": 39.32142857142857,
+      "yesterday": 38.0
+    },
+    {
+      "date": "2024-01-16",
+      "actual": 41,
+      "predicted": 39.714285714285715,
+      "yesterday": 47.0
+    },
+    {
+      "date": "2024-01-17",
+      "actual": 41,
+      "predicted": 39.642857142857146,
+      "yesterday": 41.0
+    },
+    {
+      "date": "2024-01-18",
+      "actual": 51,
+      "predicted": 39.785714285714285,
+      "yesterday": 41.0
+    },
+    {
+      "date": "2024-01-19",
+      "actual": 39,
+      "predicted": 40.17857142857143,
+      "yesterday": 51.0
+    },
+    {
+      "date": "2024-01-20",
+      "actual": 37,
+      "predicted": 39.785714285714285,
+      "yesterday": 39.0
+    },
+    {
+      "date": "2024-01-21",
+      "actual": 39,
+      "predicted": 39.75,
+      "yesterday": 37.0
+    },
+    {
+      "date": "2024-01-22",
+      "actual": 35,
+      "predicted": 39.67857142857143,
+      "yesterday": 39.0
+    },
+    {
+      "date": "2024-01-23",
+      "actual": 40,
+      "predicted": 39.42857142857143,
+      "yesterday": 35.0
+    },
+    {
+      "date": "2024-01-24",
+      "actual": 39,
+      "predicted": 39.57142857142857,
+      "yesterday": 40.0
+    },
+    {
+      "date": "2024-01-25",
+      "actual": 39,
+      "predicted": 39.535714285714285,
+      "yesterday": 39.0
+    },
+    {
+      "date": "2024-01-26",
+      "actual": 47,
+      "predicted": 39.714285714285715,
+      "yesterday": 39.0
+    },
+    {
+      "date": "2024-01-27",
+      "actual": 39,
+      "predicted": 39.92857142857143,
+      "yesterday": 47.0
+    },
+    {
+      "date": "2024-01-28",
+      "actual": 41,
+      "predicted": 40.035714285714285,
+      "yesterday": 39.0
+    },
+    {
+      "date": "2024-01-29",
+      "actual": 42,
+      "predicted": 40.357142857142854,
+      "yesterday": 41.0
+    },
+    {
+      "date": "2024-01-30",
+      "actual": 39,
+      "predicted": 40.357142857142854,
+      "yesterday": 42.0
+    },
+    {
+      "date": "2024-01-31",
+      "actual": 29,
+      "predicted": 40.464285714285715,
+      "yesterday": 39.0
+    },
+    {
+      "date": "2024-02-01",
+      "actual": 39,
+      "predicted": 39.892857142857146,
+      "yesterday": 29.0
+    },
+    {
+      "date": "2024-02-02",
+      "actual": 37,
+      "predicted": 39.607142857142854,
+      "yesterday": 39.0
+    },
+    {
+      "date": "2024-02-03",
+      "actual": 45,
+      "predicted": 39.607142857142854,
+      "yesterday": 37.0
+    },
+    {
+      "date": "2024-02-04",
+      "actual": 34,
+      "predicted": 39.892857142857146,
+      "yesterday": 45.0
+    },
+    {
+      "date": "2024-02-05",
+      "actual": 40,
+      "predicted": 39.714285714285715,
+      "yesterday": 34.0
+    },
+    {
+      "date": "2024-02-06",
+      "actual": 43,
+      "predicted": 39.5,
+      "yesterday": 40.0
+    },
+    {
+      "date": "2024-02-07",
+      "actual": 38,
+      "predicted": 39.607142857142854,
+      "yesterday": 43.0
+    },
+    {
+      "date": "2024-02-08",
+      "actual": 38,
+      "predicted": 39.535714285714285,
+      "yesterday": 38.0
+    },
+    {
+      "date": "2024-02-09",
+      "actual": 35,
+      "predicted": 39.535714285714285,
+      "yesterday": 38.0
+    },
+    {
+      "date": "2024-02-10",
+      "actual": 38,
+      "predicted": 39.357142857142854,
+      "yesterday": 35.0
+    },
+    {
+      "date": "2024-02-11",
+      "actual": 39,
+      "predicted": 39.642857142857146,
+      "yesterday": 38.0
+    },
+    {
+      "date": "2024-02-12",
+      "actual": 36,
+      "predicted": 39.67857142857143,
+      "yesterday": 39.0
+    },
+    {
+      "date": "2024-02-13",
+      "actual": 39,
+      "predicted": 39.285714285714285,
+      "yesterday": 36.0
+    },
+    {
+      "date": "2024-02-14",
+      "actual": 42,
+      "predicted": 39.214285714285715,
+      "yesterday": 39.0
+    },
+    {
+      "date": "2024-02-15",
+      "actual": 43,
+      "predicted": 39.25,
+      "yesterday": 42.0
+    },
+    {
+      "date": "2024-02-16",
+      "actual": 41,
+      "predicted": 38.964285714285715,
+      "yesterday": 43.0
+    },
+    {
+      "date": "2024-02-17",
+      "actual": 40,
+      "predicted": 39.035714285714285,
+      "yesterday": 41.0
+    },
+    {
+      "date": "2024-02-18",
+      "actual": 35,
+      "predicted": 39.142857142857146,
+      "yesterday": 40.0
+    },
+    {
+      "date": "2024-02-19",
+      "actual": 36,
+      "predicted": 39.0,
+      "yesterday": 35.0
+    },
+    {
+      "date": "2024-02-20",
+      "actual": 41,
+      "predicted": 39.035714285714285,
+      "yesterday": 36.0
+    },
+    {
+      "date": "2024-02-21",
+      "actual": 36,
+      "predicted": 39.07142857142857,
+      "yesterday": 41.0
+    },
+    {
+      "date": "2024-02-22",
+      "actual": 43,
+      "predicted": 38.964285714285715,
+      "yesterday": 36.0
+    },
+    {
+      "date": "2024-02-23",
+      "actual": 31,
+      "predicted": 39.107142857142854,
+      "yesterday": 43.0
+    },
+    {
+      "date": "2024-02-24",
+      "actual": 44,
+      "predicted": 38.535714285714285,
+      "yesterday": 31.0
+    },
+    {
+      "date": "2024-02-25",
+      "actual": 42,
+      "predicted": 38.714285714285715,
+      "yesterday": 44.0
+    },
+    {
+      "date": "2024-02-26",
+      "actual": 43,
+      "predicted": 38.75,
+      "yesterday": 42.0
+    },
+    {
+      "date": "2024-02-27",
+      "actual": 43,
+      "predicted": 38.785714285714285,
+      "yesterday": 43.0
+    },
+    {
+      "date": "2024-02-28",
+      "actual": 37,
+      "predicted": 38.92857142857143,
+      "yesterday": 43.0
+    },
+    {
+      "date": "2024-02-29",
+      "actual": 35,
+      "predicted": 39.214285714285715,
+      "yesterday": 37.0
+    },
+    {
+      "date": "2024-03-01",
+      "actual": 36,
+      "predicted": 39.07142857142857,
+      "yesterday": 35.0
+    },
+    {
+      "date": "2024-03-02",
+      "actual": 39,
+      "predicted": 39.035714285714285,
+      "yesterday": 36.0
+    },
+    {
+      "date": "2024-03-03",
+      "actual": 39,
+      "predicted": 38.82142857142857,
+      "yesterday": 39.0
+    },
+    {
+      "date": "2024-03-04",
+      "actual": 34,
+      "predicted": 39.0,
+      "yesterday": 39.0
+    },
+    {
+      "date": "2024-03-05",
+      "actual": 37,
+      "predicted": 38.785714285714285,
+      "yesterday": 34.0
+    },
+    {
+      "date": "2024-03-06",
+      "actual": 36,
+      "predicted": 38.57142857142857,
+      "yesterday": 37.0
+    },
+    {
+      "date": "2024-03-07",
+      "actual": 44,
+      "predicted": 38.5,
+      "yesterday": 36.0
+    },
+    {
+      "date": "2024-03-08",
+      "actual": 35,
+      "predicted": 38.714285714285715,
+      "yesterday": 44.0
+    },
+    {
+      "date": "2024-03-09",
+      "actual": 42,
+      "predicted": 38.714285714285715,
+      "yesterday": 35.0
+    },
+    {
+      "date": "2024-03-10",
+      "actual": 42,
+      "predicted": 38.857142857142854,
+      "yesterday": 42.0
+    },
+    {
+      "date": "2024-03-11",
+      "actual": 35,
+      "predicted": 38.964285714285715,
+      "yesterday": 42.0
+    },
+    {
+      "date": "2024-03-12",
+      "actual": 40,
+      "predicted": 38.92857142857143,
+      "yesterday": 35.0
+    },
+    {
+      "date": "2024-03-13",
+      "actual": 40,
+      "predicted": 38.964285714285715,
+      "yesterday": 40.0
+    },
+    {
+      "date": "2024-03-14",
+      "actual": 35,
+      "predicted": 38.892857142857146,
+      "yesterday": 40.0
+    },
+    {
+      "date": "2024-03-15",
+      "actual": 34,
+      "predicted": 38.607142857142854,
+      "yesterday": 35.0
+    },
+    {
+      "date": "2024-03-16",
+      "actual": 36,
+      "predicted": 38.357142857142854,
+      "yesterday": 34.0
+    },
+    {
+      "date": "2024-03-17",
+      "actual": 33,
+      "predicted": 38.214285714285715,
+      "yesterday": 36.0
+    },
+    {
+      "date": "2024-03-18",
+      "actual": 37,
+      "predicted": 38.142857142857146,
+      "yesterday": 33.0
+    },
+    {
+      "date": "2024-03-19",
+      "actual": 32,
+      "predicted": 38.17857142857143,
+      "yesterday": 37.0
+    },
+    {
+      "date": "2024-03-20",
+      "actual": 37,
+      "predicted": 37.857142857142854,
+      "yesterday": 32.0
+    },
+    {
+      "date": "2024-03-21",
+      "actual": 36,
+      "predicted": 37.892857142857146,
+      "yesterday": 37.0
+    },
+    {
+      "date": "2024-03-22",
+      "actual": 43,
+      "predicted": 37.642857142857146,
+      "yesterday": 36.0
+    },
+    {
+      "date": "2024-03-23",
+      "actual": 41,
+      "predicted": 38.07142857142857,
+      "yesterday": 43.0
+    },
+    {
+      "date": "2024-03-24",
+      "actual": 45,
+      "predicted": 37.964285714285715,
+      "yesterday": 41.0
+    },
+    {
+      "date": "2024-03-25",
+      "actual": 38,
+      "predicted": 38.07142857142857,
+      "yesterday": 45.0
+    },
+    {
+      "date": "2024-03-26",
+      "actual": 36,
+      "predicted": 37.892857142857146,
+      "yesterday": 38.0
+    },
+    {
+      "date": "2024-03-27",
+      "actual": 36,
+      "predicted": 37.642857142857146,
+      "yesterday": 36.0
+    },
+    {
+      "date": "2024-03-28",
+      "actual": 38,
+      "predicted": 37.607142857142854,
+      "yesterday": 36.0
+    },
+    {
+      "date": "2024-03-29",
+      "actual": 37,
+      "predicted": 37.714285714285715,
+      "yesterday": 38.0
+    },
+    {
+      "date": "2024-03-30",
+      "actual": 38,
+      "predicted": 37.75,
+      "yesterday": 37.0
+    },
+    {
+      "date": "2024-03-31",
+      "actual": 26,
+      "predicted": 37.714285714285715,
+      "yesterday": 38.0
+    },
+    {
+      "date": "2024-04-01",
+      "actual": 37,
+      "predicted": 37.25,
+      "yesterday": 26.0
+    },
+    {
+      "date": "2024-04-02",
+      "actual": 42,
+      "predicted": 37.357142857142854,
+      "yesterday": 37.0
+    },
+    {
+      "date": "2024-04-03",
+      "actual": 39,
+      "predicted": 37.535714285714285,
+      "yesterday": 42.0
+    },
+    {
+      "date": "2024-04-04",
+      "actual": 39,
+      "predicted": 37.642857142857146,
+      "yesterday": 39.0
+    },
+    {
+      "date": "2024-04-05",
+      "actual": 40,
+      "predicted": 37.464285714285715,
+      "yesterday": 39.0
+    },
+    {
+      "date": "2024-04-06",
+      "actual": 38,
+      "predicted": 37.642857142857146,
+      "yesterday": 40.0
+    },
+    {
+      "date": "2024-04-07",
+      "actual": 41,
+      "predicted": 37.5,
+      "yesterday": 38.0
+    },
+    {
+      "date": "2024-04-08",
+      "actual": 36,
+      "predicted": 37.464285714285715,
+      "yesterday": 41.0
+    },
+    {
+      "date": "2024-04-09",
+      "actual": 42,
+      "predicted": 37.5,
+      "yesterday": 36.0
+    },
+    {
+      "date": "2024-04-10",
+      "actual": 38,
+      "predicted": 37.57142857142857,
+      "yesterday": 42.0
+    },
+    {
+      "date": "2024-04-11",
+      "actual": 33,
+      "predicted": 37.5,
+      "yesterday": 38.0
+    },
+    {
+      "date": "2024-04-12",
+      "actual": 39,
+      "predicted": 37.42857142857143,
+      "yesterday": 33.0
+    },
+    {
+      "date": "2024-04-13",
+      "actual": 31,
+      "predicted": 37.607142857142854,
+      "yesterday": 39.0
+    },
+    {
+      "date": "2024-04-14",
+      "actual": 39,
+      "predicted": 37.42857142857143,
+      "yesterday": 31.0
+    },
+    {
+      "date": "2024-04-15",
+      "actual": 36,
+      "predicted": 37.642857142857146,
+      "yesterday": 39.0
+    },
+    {
+      "date": "2024-04-16",
+      "actual": 42,
+      "predicted": 37.607142857142854,
+      "yesterday": 36.0
+    },
+    {
+      "date": "2024-04-17",
+      "actual": 31,
+      "predicted": 37.964285714285715,
+      "yesterday": 42.0
+    },
+    {
+      "date": "2024-04-18",
+      "actual": 37,
+      "predicted": 37.75,
+      "yesterday": 31.0
+    },
+    {
+      "date": "2024-04-19",
+      "actual": 34,
+      "predicted": 37.785714285714285,
+      "yesterday": 37.0
+    },
+    {
+      "date": "2024-04-20",
+      "actual": 33,
+      "predicted": 37.464285714285715,
+      "yesterday": 34.0
+    },
+    {
+      "date": "2024-04-21",
+      "actual": 42,
+      "predicted": 37.17857142857143,
+      "yesterday": 33.0
+    },
+    {
+      "date": "2024-04-22",
+      "actual": 37,
+      "predicted": 37.07142857142857,
+      "yesterday": 42.0
+    },
+    {
+      "date": "2024-04-23",
+      "actual": 34,
+      "predicted": 37.035714285714285,
+      "yesterday": 37.0
+    },
+    {
+      "date": "2024-04-24",
+      "actual": 40,
+      "predicted": 36.964285714285715,
+      "yesterday": 34.0
+    },
+    {
+      "date": "2024-04-25",
+      "actual": 27,
+      "predicted": 37.107142857142854,
+      "yesterday": 40.0
+    },
+    {
+      "date": "2024-04-26",
+      "actual": 38,
+      "predicted": 36.714285714285715,
+      "yesterday": 27.0
+    },
+    {
+      "date": "2024-04-27",
+      "actual": 32,
+      "predicted": 36.75,
+      "yesterday": 38.0
+    },
+    {
+      "date": "2024-04-28",
+      "actual": 42,
+      "predicted": 36.535714285714285,
+      "yesterday": 32.0
+    },
+    {
+      "date": "2024-04-29",
+      "actual": 25,
+      "predicted": 37.107142857142854,
+      "yesterday": 42.0
+    },
+    {
+      "date": "2024-04-30",
+      "actual": 36,
+      "predicted": 36.67857142857143,
+      "yesterday": 25.0
+    },
+    {
+      "date": "2024-05-01",
+      "actual": 37,
+      "predicted": 36.464285714285715,
+      "yesterday": 36.0
+    },
+    {
+      "date": "2024-05-02",
+      "actual": 39,
+      "predicted": 36.392857142857146,
+      "yesterday": 37.0
+    },
+    {
+      "date": "2024-05-03",
+      "actual": 33,
+      "predicted": 36.392857142857146,
+      "yesterday": 39.0
+    },
+    {
+      "date": "2024-05-04",
+      "actual": 34,
+      "predicted": 36.142857142857146,
+      "yesterday": 33.0
+    },
+    {
+      "date": "2024-05-05",
+      "actual": 36,
+      "predicted": 36.0,
+      "yesterday": 34.0
+    },
+    {
+      "date": "2024-05-06",
+      "actual": 35,
+      "predicted": 35.82142857142857,
+      "yesterday": 36.0
+    },
+    {
+      "date": "2024-05-07",
+      "actual": 39,
+      "predicted": 35.785714285714285,
+      "yesterday": 35.0
+    },
+    {
+      "date": "2024-05-08",
+      "actual": 32,
+      "predicted": 35.67857142857143,
+      "yesterday": 39.0
+    },
+    {
+      "date": "2024-05-09",
+      "actual": 38,
+      "predicted": 35.464285714285715,
+      "yesterday": 32.0
+    },
+    {
+      "date": "2024-05-10",
+      "actual": 33,
+      "predicted": 35.642857142857146,
+      "yesterday": 38.0
+    },
+    {
+      "date": "2024-05-11",
+      "actual": 44,
+      "predicted": 35.42857142857143,
+      "yesterday": 33.0
+    },
+    {
+      "date": "2024-05-12",
+      "actual": 30,
+      "predicted": 35.892857142857146,
+      "yesterday": 44.0
+    },
+    {
+      "date": "2024-05-13",
+      "actual": 34,
+      "predicted": 35.57142857142857,
+      "yesterday": 30.0
+    },
+    {
+      "date": "2024-05-14",
+      "actual": 33,
+      "predicted": 35.5,
+      "yesterday": 34.0
+    },
+    {
+      "date": "2024-05-15",
+      "actual": 34,
+      "predicted": 35.17857142857143,
+      "yesterday": 33.0
+    },
+    {
+      "date": "2024-05-16",
+      "actual": 45,
+      "predicted": 35.285714285714285,
+      "yesterday": 34.0
+    },
+    {
+      "date": "2024-05-17",
+      "actual": 33,
+      "predicted": 35.57142857142857,
+      "yesterday": 45.0
+    },
+    {
+      "date": "2024-05-18",
+      "actual": 33,
+      "predicted": 35.535714285714285,
+      "yesterday": 33.0
+    },
+    {
+      "date": "2024-05-19",
+      "actual": 39,
+      "predicted": 35.535714285714285,
+      "yesterday": 33.0
+    },
+    {
+      "date": "2024-05-20",
+      "actual": 33,
+      "predicted": 35.42857142857143,
+      "yesterday": 39.0
+    },
+    {
+      "date": "2024-05-21",
+      "actual": 35,
+      "predicted": 35.285714285714285,
+      "yesterday": 33.0
+    },
+    {
+      "date": "2024-05-22",
+      "actual": 41,
+      "predicted": 35.32142857142857,
+      "yesterday": 35.0
+    },
+    {
+      "date": "2024-05-23",
+      "actual": 33,
+      "predicted": 35.357142857142854,
+      "yesterday": 41.0
+    },
+    {
+      "date": "2024-05-24",
+      "actual": 36,
+      "predicted": 35.57142857142857,
+      "yesterday": 33.0
+    },
+    {
+      "date": "2024-05-25",
+      "actual": 42,
+      "predicted": 35.5,
+      "yesterday": 36.0
+    },
+    {
+      "date": "2024-05-26",
+      "actual": 35,
+      "predicted": 35.857142857142854,
+      "yesterday": 42.0
+    },
+    {
+      "date": "2024-05-27",
+      "actual": 35,
+      "predicted": 35.607142857142854,
+      "yesterday": 35.0
+    },
+    {
+      "date": "2024-05-28",
+      "actual": 44,
+      "predicted": 35.964285714285715,
+      "yesterday": 35.0
+    },
+    {
+      "date": "2024-05-29",
+      "actual": 32,
+      "predicted": 36.25,
+      "yesterday": 44.0
+    },
+    {
+      "date": "2024-05-30",
+      "actual": 32,
+      "predicted": 36.07142857142857,
+      "yesterday": 32.0
+    },
+    {
+      "date": "2024-05-31",
+      "actual": 35,
+      "predicted": 35.82142857142857,
+      "yesterday": 32.0
+    },
+    {
+      "date": "2024-06-01",
+      "actual": 27,
+      "predicted": 35.892857142857146,
+      "yesterday": 35.0
+    },
+    {
+      "date": "2024-06-02",
+      "actual": 32,
+      "predicted": 35.642857142857146,
+      "yesterday": 27.0
+    },
+    {
+      "date": "2024-06-03",
+      "actual": 40,
+      "predicted": 35.5,
+      "yesterday": 32.0
+    },
+    {
+      "date": "2024-06-04",
+      "actual": 26,
+      "predicted": 35.67857142857143,
+      "yesterday": 40.0
+    },
+    {
+      "date": "2024-06-05",
+      "actual": 32,
+      "predicted": 35.214285714285715,
+      "yesterday": 26.0
+    },
+    {
+      "date": "2024-06-06",
+      "actual": 28,
+      "predicted": 35.214285714285715,
+      "yesterday": 32.0
+    },
+    {
+      "date": "2024-06-07",
+      "actual": 32,
+      "predicted": 34.857142857142854,
+      "yesterday": 28.0
+    },
+    {
+      "date": "2024-06-08",
+      "actual": 39,
+      "predicted": 34.82142857142857,
+      "yesterday": 32.0
+    },
+    {
+      "date": "2024-06-09",
+      "actual": 32,
+      "predicted": 34.642857142857146,
+      "yesterday": 39.0
+    },
+    {
+      "date": "2024-06-10",
+      "actual": 31,
+      "predicted": 34.714285714285715,
+      "yesterday": 32.0
+    },
+    {
+      "date": "2024-06-11",
+      "actual": 38,
+      "predicted": 34.607142857142854,
+      "yesterday": 31.0
+    },
+    {
+      "date": "2024-06-12",
+      "actual": 24,
+      "predicted": 34.785714285714285,
+      "yesterday": 38.0
+    },
+    {
+      "date": "2024-06-13",
+      "actual": 35,
+      "predicted": 34.42857142857143,
+      "yesterday": 24.0
+    },
+    {
+      "date": "2024-06-14",
+      "actual": 33,
+      "predicted": 34.07142857142857,
+      "yesterday": 35.0
+    },
+    {
+      "date": "2024-06-15",
+      "actual": 31,
+      "predicted": 34.07142857142857,
+      "yesterday": 33.0
+    },
+    {
+      "date": "2024-06-16",
+      "actual": 35,
+      "predicted": 34.0,
+      "yesterday": 31.0
+    },
+    {
+      "date": "2024-06-17",
+      "actual": 40,
+      "predicted": 33.857142857142854,
+      "yesterday": 35.0
+    },
+    {
+      "date": "2024-06-18",
+      "actual": 41,
+      "predicted": 34.107142857142854,
+      "yesterday": 40.0
+    },
+    {
+      "date": "2024-06-19",
+      "actual": 33,
+      "predicted": 34.32142857142857,
+      "yesterday": 41.0
+    },
+    {
+      "date": "2024-06-20",
+      "actual": 32,
+      "predicted": 34.035714285714285,
+      "yesterday": 33.0
+    },
+    {
+      "date": "2024-06-21",
+      "actual": 30,
+      "predicted": 34.0,
+      "yesterday": 32.0
+    },
+    {
+      "date": "2024-06-22",
+      "actual": 34,
+      "predicted": 33.785714285714285,
+      "yesterday": 30.0
+    },
+    {
+      "date": "2024-06-23",
+      "actual": 37,
+      "predicted": 33.5,
+      "yesterday": 34.0
+    },
+    {
+      "date": "2024-06-24",
+      "actual": 32,
+      "predicted": 33.57142857142857,
+      "yesterday": 37.0
+    },
+    {
+      "date": "2024-06-25",
+      "actual": 29,
+      "predicted": 33.464285714285715,
+      "yesterday": 32.0
+    },
+    {
+      "date": "2024-06-26",
+      "actual": 33,
+      "predicted": 32.92857142857143,
+      "yesterday": 29.0
+    },
+    {
+      "date": "2024-06-27",
+      "actual": 30,
+      "predicted": 32.964285714285715,
+      "yesterday": 33.0
+    },
+    {
+      "date": "2024-06-28",
+      "actual": 33,
+      "predicted": 32.892857142857146,
+      "yesterday": 30.0
+    },
+    {
+      "date": "2024-06-29",
+      "actual": 34,
+      "predicted": 32.82142857142857,
+      "yesterday": 33.0
+    },
+    {
+      "date": "2024-06-30",
+      "actual": 39,
+      "predicted": 33.07142857142857,
+      "yesterday": 34.0
+    },
+    {
+      "date": "2024-07-01",
+      "actual": 31,
+      "predicted": 33.32142857142857,
+      "yesterday": 39.0
+    },
+    {
+      "date": "2024-07-02",
+      "actual": 35,
+      "predicted": 33.0,
+      "yesterday": 31.0
+    },
+    {
+      "date": "2024-07-03",
+      "actual": 40,
+      "predicted": 33.32142857142857,
+      "yesterday": 35.0
+    },
+    {
+      "date": "2024-07-04",
+      "actual": 34,
+      "predicted": 33.607142857142854,
+      "yesterday": 40.0
+    },
+    {
+      "date": "2024-07-05",
+      "actual": 34,
+      "predicted": 33.82142857142857,
+      "yesterday": 34.0
+    },
+    {
+      "date": "2024-07-06",
+      "actual": 34,
+      "predicted": 33.892857142857146,
+      "yesterday": 34.0
+    },
+    {
+      "date": "2024-07-07",
+      "actual": 38,
+      "predicted": 33.714285714285715,
+      "yesterday": 34.0
+    },
+    {
+      "date": "2024-07-08",
+      "actual": 36,
+      "predicted": 33.92857142857143,
+      "yesterday": 38.0
+    },
+    {
+      "date": "2024-07-09",
+      "actual": 40,
+      "predicted": 34.107142857142854,
+      "yesterday": 36.0
+    },
+    {
+      "date": "2024-07-10",
+      "actual": 33,
+      "predicted": 34.17857142857143,
+      "yesterday": 40.0
+    },
+    {
+      "date": "2024-07-11",
+      "actual": 37,
+      "predicted": 34.5,
+      "yesterday": 33.0
+    },
+    {
+      "date": "2024-07-12",
+      "actual": 38,
+      "predicted": 34.57142857142857,
+      "yesterday": 37.0
+    },
+    {
+      "date": "2024-07-13",
+      "actual": 31,
+      "predicted": 34.75,
+      "yesterday": 38.0
+    },
+    {
+      "date": "2024-07-14",
+      "actual": 35,
+      "predicted": 34.75,
+      "yesterday": 31.0
+    },
+    {
+      "date": "2024-07-15",
+      "actual": 37,
+      "predicted": 34.75,
+      "yesterday": 35.0
+    },
+    {
+      "date": "2024-07-16",
+      "actual": 36,
+      "predicted": 34.642857142857146,
+      "yesterday": 37.0
+    },
+    {
+      "date": "2024-07-17",
+      "actual": 36,
+      "predicted": 34.464285714285715,
+      "yesterday": 36.0
+    },
+    {
+      "date": "2024-07-18",
+      "actual": 41,
+      "predicted": 34.57142857142857,
+      "yesterday": 36.0
+    },
+    {
+      "date": "2024-07-19",
+      "actual": 41,
+      "predicted": 34.892857142857146,
+      "yesterday": 41.0
+    },
+    {
+      "date": "2024-07-20",
+      "actual": 30,
+      "predicted": 35.285714285714285,
+      "yesterday": 41.0
+    },
+    {
+      "date": "2024-07-21",
+      "actual": 30,
+      "predicted": 35.142857142857146,
+      "yesterday": 30.0
+    },
+    {
+      "date": "2024-07-22",
+      "actual": 40,
+      "predicted": 34.892857142857146,
+      "yesterday": 30.0
+    },
+    {
+      "date": "2024-07-23",
+      "actual": 31,
+      "predicted": 35.17857142857143,
+      "yesterday": 40.0
+    },
+    {
+      "date": "2024-07-24",
+      "actual": 38,
+      "predicted": 35.25,
+      "yesterday": 31.0
+    },
+    {
+      "date": "2024-07-25",
+      "actual": 37,
+      "predicted": 35.42857142857143,
+      "yesterday": 38.0
+    },
+    {
+      "date": "2024-07-26",
+      "actual": 33,
+      "predicted": 35.67857142857143,
+      "yesterday": 37.0
+    },
+    {
+      "date": "2024-07-27",
+      "actual": 36,
+      "predicted": 35.67857142857143,
+      "yesterday": 33.0
+    },
+    {
+      "date": "2024-07-28",
+      "actual": 35,
+      "predicted": 35.75,
+      "yesterday": 36.0
+    },
+    {
+      "date": "2024-07-29",
+      "actual": 41,
+      "predicted": 35.607142857142854,
+      "yesterday": 35.0
+    },
+    {
+      "date": "2024-07-30",
+      "actual": 36,
+      "predicted": 35.964285714285715,
+      "yesterday": 41.0
+    },
+    {
+      "date": "2024-07-31",
+      "actual": 24,
+      "predicted": 36.0,
+      "yesterday": 36.0
+    },
+    {
+      "date": "2024-08-01",
+      "actual": 38,
+      "predicted": 35.42857142857143,
+      "yesterday": 24.0
+    },
+    {
+      "date": "2024-08-02",
+      "actual": 39,
+      "predicted": 35.57142857142857,
+      "yesterday": 38.0
+    },
+    {
+      "date": "2024-08-03",
+      "actual": 34,
+      "predicted": 35.75,
+      "yesterday": 39.0
+    },
+    {
+      "date": "2024-08-04",
+      "actual": 39,
+      "predicted": 35.75,
+      "yesterday": 34.0
+    },
+    {
+      "date": "2024-08-05",
+      "actual": 36,
+      "predicted": 35.785714285714285,
+      "yesterday": 39.0
+    },
+    {
+      "date": "2024-08-06",
+      "actual": 43,
+      "predicted": 35.785714285714285,
+      "yesterday": 36.0
+    },
+    {
+      "date": "2024-08-07",
+      "actual": 39,
+      "predicted": 35.892857142857146,
+      "yesterday": 43.0
+    },
+    {
+      "date": "2024-08-08",
+      "actual": 32,
+      "predicted": 36.107142857142854,
+      "yesterday": 39.0
+    },
+    {
+      "date": "2024-08-09",
+      "actual": 34,
+      "predicted": 35.92857142857143,
+      "yesterday": 32.0
+    },
+    {
+      "date": "2024-08-10",
+      "actual": 37,
+      "predicted": 35.785714285714285,
+      "yesterday": 34.0
+    },
+    {
+      "date": "2024-08-11",
+      "actual": 36,
+      "predicted": 36.0,
+      "yesterday": 37.0
+    },
+    {
+      "date": "2024-08-12",
+      "actual": 41,
+      "predicted": 36.035714285714285,
+      "yesterday": 36.0
+    },
+    {
+      "date": "2024-08-13",
+      "actual": 43,
+      "predicted": 36.17857142857143,
+      "yesterday": 41.0
+    },
+    {
+      "date": "2024-08-14",
+      "actual": 38,
+      "predicted": 36.42857142857143,
+      "yesterday": 43.0
+    },
+    {
+      "date": "2024-08-15",
+      "actual": 33,
+      "predicted": 36.5,
+      "yesterday": 38.0
+    },
+    {
+      "date": "2024-08-16",
+      "actual": 39,
+      "predicted": 36.214285714285715,
+      "yesterday": 33.0
+    },
+    {
+      "date": "2024-08-17",
+      "actual": 39,
+      "predicted": 36.142857142857146,
+      "yesterday": 39.0
+    },
+    {
+      "date": "2024-08-18",
+      "actual": 34,
+      "predicted": 36.464285714285715,
+      "yesterday": 39.0
+    },
+    {
+      "date": "2024-08-19",
+      "actual": 39,
+      "predicted": 36.607142857142854,
+      "yesterday": 34.0
+    },
+    {
+      "date": "2024-08-20",
+      "actual": 37,
+      "predicted": 36.57142857142857,
+      "yesterday": 39.0
+    },
+    {
+      "date": "2024-08-21",
+      "actual": 43,
+      "predicted": 36.785714285714285,
+      "yesterday": 37.0
+    },
+    {
+      "date": "2024-08-22",
+      "actual": 35,
+      "predicted": 36.964285714285715,
+      "yesterday": 43.0
+    },
+    {
+      "date": "2024-08-23",
+      "actual": 39,
+      "predicted": 36.892857142857146,
+      "yesterday": 35.0
+    },
+    {
+      "date": "2024-08-24",
+      "actual": 35,
+      "predicted": 37.107142857142854,
+      "yesterday": 39.0
+    },
+    {
+      "date": "2024-08-25",
+      "actual": 37,
+      "predicted": 37.07142857142857,
+      "yesterday": 35.0
+    },
+    {
+      "date": "2024-08-26",
+      "actual": 35,
+      "predicted": 37.142857142857146,
+      "yesterday": 37.0
+    },
+    {
+      "date": "2024-08-27",
+      "actual": 39,
+      "predicted": 36.92857142857143,
+      "yesterday": 35.0
+    },
+    {
+      "date": "2024-08-28",
+      "actual": 46,
+      "predicted": 37.035714285714285,
+      "yesterday": 39.0
+    },
+    {
+      "date": "2024-08-29",
+      "actual": 37,
+      "predicted": 37.82142857142857,
+      "yesterday": 46.0
+    },
+    {
+      "date": "2024-08-30",
+      "actual": 30,
+      "predicted": 37.785714285714285,
+      "yesterday": 37.0
+    },
+    {
+      "date": "2024-08-31",
+      "actual": 29,
+      "predicted": 37.464285714285715,
+      "yesterday": 30.0
+    },
+    {
+      "date": "2024-09-01",
+      "actual": 41,
+      "predicted": 37.285714285714285,
+      "yesterday": 29.0
+    },
+    {
+      "date": "2024-09-02",
+      "actual": 34,
+      "predicted": 37.357142857142854,
+      "yesterday": 41.0
+    },
+    {
+      "date": "2024-09-03",
+      "actual": 41,
+      "predicted": 37.285714285714285,
+      "yesterday": 34.0
+    },
+    {
+      "date": "2024-09-04",
+      "actual": 39,
+      "predicted": 37.214285714285715,
+      "yesterday": 41.0
+    },
+    {
+      "date": "2024-09-05",
+      "actual": 38,
+      "predicted": 37.214285714285715,
+      "yesterday": 39.0
+    },
+    {
+      "date": "2024-09-06",
+      "actual": 38,
+      "predicted": 37.42857142857143,
+      "yesterday": 38.0
+    },
+    {
+      "date": "2024-09-07",
+      "actual": 30,
+      "predicted": 37.57142857142857,
+      "yesterday": 38.0
+    },
+    {
+      "date": "2024-09-08",
+      "actual": 34,
+      "predicted": 37.32142857142857,
+      "yesterday": 30.0
+    },
+    {
+      "date": "2024-09-09",
+      "actual": 33,
+      "predicted": 37.25,
+      "yesterday": 34.0
+    },
+    {
+      "date": "2024-09-10",
+      "actual": 36,
+      "predicted": 36.964285714285715,
+      "yesterday": 33.0
+    },
+    {
+      "date": "2024-09-11",
+      "actual": 42,
+      "predicted": 36.714285714285715,
+      "yesterday": 36.0
+    },
+    {
+      "date": "2024-09-12",
+      "actual": 38,
+      "predicted": 36.857142857142854,
+      "yesterday": 42.0
+    },
+    {
+      "date": "2024-09-13",
+      "actual": 48,
+      "predicted": 37.035714285714285,
+      "yesterday": 38.0
+    },
+    {
+      "date": "2024-09-14",
+      "actual": 32,
+      "predicted": 37.357142857142854,
+      "yesterday": 48.0
+    },
+    {
+      "date": "2024-09-15",
+      "actual": 35,
+      "predicted": 37.107142857142854,
+      "yesterday": 32.0
+    },
+    {
+      "date": "2024-09-16",
+      "actual": 44,
+      "predicted": 37.142857142857146,
+      "yesterday": 35.0
+    },
+    {
+      "date": "2024-09-17",
+      "actual": 40,
+      "predicted": 37.32142857142857,
+      "yesterday": 44.0
+    },
+    {
+      "date": "2024-09-18",
+      "actual": 38,
+      "predicted": 37.42857142857143,
+      "yesterday": 40.0
+    },
+    {
+      "date": "2024-09-19",
+      "actual": 37,
+      "predicted": 37.25,
+      "yesterday": 38.0
+    },
+    {
+      "date": "2024-09-20",
+      "actual": 41,
+      "predicted": 37.32142857142857,
+      "yesterday": 37.0
+    },
+    {
+      "date": "2024-09-21",
+      "actual": 37,
+      "predicted": 37.392857142857146,
+      "yesterday": 41.0
+    },
+    {
+      "date": "2024-09-22",
+      "actual": 42,
+      "predicted": 37.464285714285715,
+      "yesterday": 37.0
+    },
+    {
+      "date": "2024-09-23",
+      "actual": 35,
+      "predicted": 37.642857142857146,
+      "yesterday": 42.0
+    },
+    {
+      "date": "2024-09-24",
+      "actual": 30,
+      "predicted": 37.642857142857146,
+      "yesterday": 35.0
+    },
+    {
+      "date": "2024-09-25",
+      "actual": 39,
+      "predicted": 37.32142857142857,
+      "yesterday": 30.0
+    },
+    {
+      "date": "2024-09-26",
+      "actual": 31,
+      "predicted": 37.07142857142857,
+      "yesterday": 39.0
+    },
+    {
+      "date": "2024-09-27",
+      "actual": 36,
+      "predicted": 36.857142857142854,
+      "yesterday": 31.0
+    },
+    {
+      "date": "2024-09-28",
+      "actual": 33,
+      "predicted": 37.07142857142857,
+      "yesterday": 36.0
+    },
+    {
+      "date": "2024-09-29",
+      "actual": 34,
+      "predicted": 37.214285714285715,
+      "yesterday": 33.0
+    },
+    {
+      "date": "2024-09-30",
+      "actual": 31,
+      "predicted": 36.964285714285715,
+      "yesterday": 34.0
+    },
+    {
+      "date": "2024-10-01",
+      "actual": 40,
+      "predicted": 36.857142857142854,
+      "yesterday": 31.0
+    },
+    {
+      "date": "2024-10-02",
+      "actual": 44,
+      "predicted": 36.82142857142857,
+      "yesterday": 40.0
+    },
+    {
+      "date": "2024-10-03",
+      "actual": 34,
+      "predicted": 37.0,
+      "yesterday": 44.0
+    },
+    {
+      "date": "2024-10-04",
+      "actual": 39,
+      "predicted": 36.857142857142854,
+      "yesterday": 34.0
+    },
+    {
+      "date": "2024-10-05",
+      "actual": 31,
+      "predicted": 36.892857142857146,
+      "yesterday": 39.0
+    },
+    {
+      "date": "2024-10-06",
+      "actual": 39,
+      "predicted": 36.92857142857143,
+      "yesterday": 31.0
+    },
+    {
+      "date": "2024-10-07",
+      "actual": 40,
+      "predicted": 37.107142857142854,
+      "yesterday": 39.0
+    },
+    {
+      "date": "2024-10-08",
+      "actual": 41,
+      "predicted": 37.357142857142854,
+      "yesterday": 40.0
+    },
+    {
+      "date": "2024-10-09",
+      "actual": 37,
+      "predicted": 37.535714285714285,
+      "yesterday": 41.0
+    },
+    {
+      "date": "2024-10-10",
+      "actual": 43,
+      "predicted": 37.357142857142854,
+      "yesterday": 37.0
+    },
+    {
+      "date": "2024-10-11",
+      "actual": 39,
+      "predicted": 37.535714285714285,
+      "yesterday": 43.0
+    },
+    {
+      "date": "2024-10-12",
+      "actual": 44,
+      "predicted": 37.214285714285715,
+      "yesterday": 39.0
+    },
+    {
+      "date": "2024-10-13",
+      "actual": 41,
+      "predicted": 37.642857142857146,
+      "yesterday": 44.0
+    },
+    {
+      "date": "2024-10-14",
+      "actual": 37,
+      "predicted": 37.857142857142854,
+      "yesterday": 41.0
+    },
+    {
+      "date": "2024-10-15",
+      "actual": 37,
+      "predicted": 37.607142857142854,
+      "yesterday": 37.0
+    },
+    {
+      "date": "2024-10-16",
+      "actual": 40,
+      "predicted": 37.5,
+      "yesterday": 37.0
+    },
+    {
+      "date": "2024-10-17",
+      "actual": 40,
+      "predicted": 37.57142857142857,
+      "yesterday": 40.0
+    },
+    {
+      "date": "2024-10-18",
+      "actual": 43,
+      "predicted": 37.67857142857143,
+      "yesterday": 40.0
+    },
+    {
+      "date": "2024-10-19",
+      "actual": 32,
+      "predicted": 37.75,
+      "yesterday": 43.0
+    },
+    {
+      "date": "2024-10-20",
+      "actual": 40,
+      "predicted": 37.57142857142857,
+      "yesterday": 32.0
+    },
+    {
+      "date": "2024-10-21",
+      "actual": 43,
+      "predicted": 37.5,
+      "yesterday": 40.0
+    },
+    {
+      "date": "2024-10-22",
+      "actual": 40,
+      "predicted": 37.785714285714285,
+      "yesterday": 43.0
+    },
+    {
+      "date": "2024-10-23",
+      "actual": 44,
+      "predicted": 38.142857142857146,
+      "yesterday": 40.0
+    },
+    {
+      "date": "2024-10-24",
+      "actual": 41,
+      "predicted": 38.32142857142857,
+      "yesterday": 44.0
+    },
+    {
+      "date": "2024-10-25",
+      "actual": 36,
+      "predicted": 38.67857142857143,
+      "yesterday": 41.0
+    },
+    {
+      "date": "2024-10-26",
+      "actual": 37,
+      "predicted": 38.67857142857143,
+      "yesterday": 36.0
+    },
+    {
+      "date": "2024-10-27",
+      "actual": 43,
+      "predicted": 38.82142857142857,
+      "yesterday": 37.0
+    },
+    {
+      "date": "2024-10-28",
+      "actual": 34,
+      "predicted": 39.142857142857146,
+      "yesterday": 43.0
+    },
+    {
+      "date": "2024-10-29",
+      "actual": 31,
+      "predicted": 39.25,
+      "yesterday": 34.0
+    },
+    {
+      "date": "2024-10-30",
+      "actual": 40,
+      "predicted": 38.92857142857143,
+      "yesterday": 31.0
+    },
+    {
+      "date": "2024-10-31",
+      "actual": 41,
+      "predicted": 38.785714285714285,
+      "yesterday": 40.0
+    },
+    {
+      "date": "2024-11-01",
+      "actual": 39,
+      "predicted": 39.035714285714285,
+      "yesterday": 41.0
+    },
+    {
+      "date": "2024-11-02",
+      "actual": 43,
+      "predicted": 39.035714285714285,
+      "yesterday": 39.0
+    },
+    {
+      "date": "2024-11-03",
+      "actual": 40,
+      "predicted": 39.464285714285715,
+      "yesterday": 43.0
+    },
+    {
+      "date": "2024-11-04",
+      "actual": 36,
+      "predicted": 39.5,
+      "yesterday": 40.0
+    },
+    {
+      "date": "2024-11-05",
+      "actual": 29,
+      "predicted": 39.357142857142854,
+      "yesterday": 36.0
+    },
+    {
+      "date": "2024-11-06",
+      "actual": 46,
+      "predicted": 38.92857142857143,
+      "yesterday": 29.0
+    },
+    {
+      "date": "2024-11-07",
+      "actual": 31,
+      "predicted": 39.25,
+      "yesterday": 46.0
+    },
+    {
+      "date": "2024-11-08",
+      "actual": 38,
+      "predicted": 38.82142857142857,
+      "yesterday": 31.0
+    },
+    {
+      "date": "2024-11-09",
+      "actual": 40,
+      "predicted": 38.785714285714285,
+      "yesterday": 38.0
+    },
+    {
+      "date": "2024-11-10",
+      "actual": 42,
+      "predicted": 38.642857142857146,
+      "yesterday": 40.0
+    },
+    {
+      "date": "2024-11-11",
+      "actual": 36,
+      "predicted": 38.67857142857143,
+      "yesterday": 42.0
+    },
+    {
+      "date": "2024-11-12",
+      "actual": 33,
+      "predicted": 38.642857142857146,
+      "yesterday": 36.0
+    },
+    {
+      "date": "2024-11-13",
+      "actual": 35,
+      "predicted": 38.5,
+      "yesterday": 33.0
+    },
+    {
+      "date": "2024-11-14",
+      "actual": 40,
+      "predicted": 38.32142857142857,
+      "yesterday": 35.0
+    },
+    {
+      "date": "2024-11-15",
+      "actual": 41,
+      "predicted": 38.32142857142857,
+      "yesterday": 40.0
+    },
+    {
+      "date": "2024-11-16",
+      "actual": 34,
+      "predicted": 38.25,
+      "yesterday": 41.0
+    },
+    {
+      "date": "2024-11-17",
+      "actual": 36,
+      "predicted": 38.32142857142857,
+      "yesterday": 34.0
+    },
+    {
+      "date": "2024-11-18",
+      "actual": 38,
+      "predicted": 38.17857142857143,
+      "yesterday": 36.0
+    },
+    {
+      "date": "2024-11-19",
+      "actual": 45,
+      "predicted": 38.0,
+      "yesterday": 38.0
+    },
+    {
+      "date": "2024-11-20",
+      "actual": 47,
+      "predicted": 38.17857142857143,
+      "yesterday": 45.0
+    },
+    {
+      "date": "2024-11-21",
+      "actual": 38,
+      "predicted": 38.285714285714285,
+      "yesterday": 47.0
+    },
+    {
+      "date": "2024-11-22",
+      "actual": 32,
+      "predicted": 38.17857142857143,
+      "yesterday": 38.0
+    },
+    {
+      "date": "2024-11-23",
+      "actual": 39,
+      "predicted": 38.035714285714285,
+      "yesterday": 32.0
+    },
+    {
+      "date": "2024-11-24",
+      "actual": 37,
+      "predicted": 38.107142857142854,
+      "yesterday": 39.0
+    },
+    {
+      "date": "2024-11-25",
+      "actual": 32,
+      "predicted": 37.892857142857146,
+      "yesterday": 37.0
+    },
+    {
+      "date": "2024-11-26",
+      "actual": 44,
+      "predicted": 37.82142857142857,
+      "yesterday": 32.0
+    },
+    {
+      "date": "2024-11-27",
+      "actual": 41,
+      "predicted": 38.285714285714285,
+      "yesterday": 44.0
+    },
+    {
+      "date": "2024-11-28",
+      "actual": 40,
+      "predicted": 38.32142857142857,
+      "yesterday": 41.0
+    },
+    {
+      "date": "2024-11-29",
+      "actual": 42,
+      "predicted": 38.285714285714285,
+      "yesterday": 40.0
+    },
+    {
+      "date": "2024-11-30",
+      "actual": 40,
+      "predicted": 38.392857142857146,
+      "yesterday": 42.0
+    },
+    {
+      "date": "2024-12-01",
+      "actual": 34,
+      "predicted": 38.285714285714285,
+      "yesterday": 40.0
+    },
+    {
+      "date": "2024-12-02",
+      "actual": 37,
+      "predicted": 38.07142857142857,
+      "yesterday": 34.0
+    },
+    {
+      "date": "2024-12-03",
+      "actual": 42,
+      "predicted": 38.107142857142854,
+      "yesterday": 37.0
+    },
+    {
+      "date": "2024-12-04",
+      "actual": 36,
+      "predicted": 38.57142857142857,
+      "yesterday": 42.0
+    },
+    {
+      "date": "2024-12-05",
+      "actual": 41,
+      "predicted": 38.214285714285715,
+      "yesterday": 36.0
+    },
+    {
+      "date": "2024-12-06",
+      "actual": 36,
+      "predicted": 38.57142857142857,
+      "yesterday": 41.0
+    },
+    {
+      "date": "2024-12-07",
+      "actual": 41,
+      "predicted": 38.5,
+      "yesterday": 36.0
+    },
+    {
+      "date": "2024-12-08",
+      "actual": 38,
+      "predicted": 38.535714285714285,
+      "yesterday": 41.0
+    },
+    {
+      "date": "2024-12-09",
+      "actual": 27,
+      "predicted": 38.392857142857146,
+      "yesterday": 38.0
+    },
+    {
+      "date": "2024-12-10",
+      "actual": 41,
+      "predicted": 38.07142857142857,
+      "yesterday": 27.0
+    },
+    {
+      "date": "2024-12-11",
+      "actual": 34,
+      "predicted": 38.357142857142854,
+      "yesterday": 41.0
+    },
+    {
+      "date": "2024-12-12",
+      "actual": 39,
+      "predicted": 38.32142857142857,
+      "yesterday": 34.0
+    },
+    {
+      "date": "2024-12-13",
+      "actual": 39,
+      "predicted": 38.285714285714285,
+      "yesterday": 39.0
+    },
+    {
+      "date": "2024-12-14",
+      "actual": 44,
+      "predicted": 38.214285714285715,
+      "yesterday": 39.0
+    },
+    {
+      "date": "2024-12-15",
+      "actual": 42,
+      "predicted": 38.57142857142857,
+      "yesterday": 44.0
+    },
+    {
+      "date": "2024-12-16",
+      "actual": 39,
+      "predicted": 38.785714285714285,
+      "yesterday": 42.0
+    },
+    {
+      "date": "2024-12-17",
+      "actual": 35,
+      "predicted": 38.82142857142857,
+      "yesterday": 39.0
+    },
+    {
+      "date": "2024-12-18",
+      "actual": 42,
+      "predicted": 38.464285714285715,
+      "yesterday": 35.0
+    },
+    {
+      "date": "2024-12-19",
+      "actual": 43,
+      "predicted": 38.285714285714285,
+      "yesterday": 42.0
+    },
+    {
+      "date": "2024-12-20",
+      "actual": 39,
+      "predicted": 38.464285714285715,
+      "yesterday": 43.0
+    },
+    {
+      "date": "2024-12-21",
+      "actual": 31,
+      "predicted": 38.714285714285715,
+      "yesterday": 39.0
+    },
+    {
+      "date": "2024-12-22",
+      "actual": 40,
+      "predicted": 38.42857142857143,
+      "yesterday": 31.0
+    },
+    {
+      "date": "2024-12-23",
+      "actual": 38,
+      "predicted": 38.535714285714285,
+      "yesterday": 40.0
+    },
+    {
+      "date": "2024-12-24",
+      "actual": 41,
+      "predicted": 38.75,
+      "yesterday": 38.0
+    },
+    {
+      "date": "2024-12-25",
+      "actual": 41,
+      "predicted": 38.642857142857146,
+      "yesterday": 41.0
+    },
+    {
+      "date": "2024-12-26",
+      "actual": 37,
+      "predicted": 38.642857142857146,
+      "yesterday": 41.0
+    },
+    {
+      "date": "2024-12-27",
+      "actual": 36,
+      "predicted": 38.535714285714285,
+      "yesterday": 37.0
+    },
+    {
+      "date": "2024-12-28",
+      "actual": 41,
+      "predicted": 38.32142857142857,
+      "yesterday": 36.0
+    },
+    {
+      "date": "2024-12-29",
+      "actual": 40,
+      "predicted": 38.357142857142854,
+      "yesterday": 41.0
+    },
+    {
+      "date": "2024-12-30",
+      "actual": 42,
+      "predicted": 38.57142857142857,
+      "yesterday": 40.0
+    },
+    {
+      "date": "2024-12-31",
+      "actual": 35,
+      "predicted": 38.75,
+      "yesterday": 42.0
+    }
+  ],
+  "limitations": [
+    "Port calls are AIS-derived indicators, not observed port waiting times, cargo delays or losses.",
+    "No observed invoices, carrier quotations, claims, premiums or funding costs are available.",
+    "No causal congestion effect, calibrated insurance price or realised operational savings is established.",
+    "One port, one held-out year and a later-retrieved data vintage; external generalisation is untested.",
+    "No automatic mapping from predicted calls to the constructed order's port-delay assumption.",
+    "AI-assisted implementation; personal learning and independent replication remain to be documented."
+  ]
+}
