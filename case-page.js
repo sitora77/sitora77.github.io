@@ -1,73 +1,111 @@
 'use strict';
 (() => {
   const fixture = JSON.parse(document.getElementById('case-inputs').textContent);
+  const t = JSON.parse(document.getElementById('case-locale').textContent);
   const money = n => `US$${n.toLocaleString('en-US', {minimumFractionDigits: 2, maximumFractionDigits: 2})}`;
-  const day = n => n.toFixed(2);
-  const ids = ['delay', 'stock', 'rate', 'cash', 'demand', 'payment'];
-  const status = document.getElementById('calculation-status');
-  let current, rows;
+  const day = n => n.toFixed(2), name = r => t.option_names[r.option_id] || r.option;
+  const ids = ['delay', 'stock', 'rate', 'cash', 'demand', 'payment', 'funding', 'deadline', 'minimum'];
+  const get = id => document.getElementById(id);
+  const status = get('calculation-status'), notice = get('decision-notice');
+  let current, rows, decision, valid = false;
   function cells(values) {
     const tr = document.createElement('tr');
     values.forEach(value => {const td = document.createElement('td'); td.textContent = value; tr.appendChild(td);});
     return tr;
   }
+  function summaryLabel(summary, comparison) {
+    const selected = comparison.find(r => r.option_id === summary.recommended_option_id);
+    return selected ? name(selected) : t.no_eligible;
+  }
+  function result() {
+    return {data_status: 'Constructed assumptions, not observed savings or approved financing',
+      inputs: current, decision, comparison: rows};
+  }
   function drawLedger() {
     if (!rows) return;
-    const row = rows.find(r => r.option_id === document.getElementById('ledger-option').value);
+    const row = rows.find(r => r.option_id === get('ledger-option').value);
     if (!row) return;
-    const body = document.getElementById('ledger-body'); body.replaceChildren();
-    row.events.forEach(e => body.appendChild(cells([day(e.day), e.event, money(e.net_flow), money(e.cash_balance), money(e.funding_need)])));
-    document.getElementById('ledger-note').textContent = `${row.funding_dollar_days.toLocaleString('en-US')} USD-days × ${(current.order.annual_funding_rate * 100).toFixed(1)}% ÷ 365 = ${money(row.funding_cost)}。计算截止到客户回款，不包含此后的剩余债务利息。`;
+    const body = get('ledger-body'); body.replaceChildren();
+    row.events.forEach(e => body.appendChild(cells([day(e.day),
+      e.event.split('; ').map(part => t.events[part] || part).join('; '),
+      money(e.net_flow), money(e.cash_balance), money(e.funding_need)])));
+    get('ledger-note').textContent = `${row.funding_dollar_days.toLocaleString('en-US')} USD-days × ${(current.order.annual_funding_rate * 100).toFixed(1)}% ÷ 365 = ${money(row.funding_cost)}${t.ledger_suffix}${row.residual_funding_need > 0 ? ' ' + t.residual : ''}`;
   }
   function calculate() {
     try {
-      for (const id of ids) {if (!document.getElementById(id).checkValidity()) throw new Error('请在允许范围内填写全部输入。');}
-      current = JSON.parse(JSON.stringify(fixture));
-      current.selected_port_delay_days = Number(document.getElementById('delay').value);
-      Object.assign(current.order, {
-        stock_cover_days: Number(document.getElementById('stock').value),
-        annual_funding_rate: Number(document.getElementById('rate').value) / 100,
-        initial_cash: Number(document.getElementById('cash').value),
-        daily_demand: Number(document.getElementById('demand').value),
-        customer_payment_days: Number(document.getElementById('payment').value)
+      for (const id of ids) if (!get(id).checkValidity()) throw new Error(t.invalid);
+      const candidate = JSON.parse(JSON.stringify(fixture));
+      candidate.selected_port_delay_days = Number(get('delay').value);
+      Object.assign(candidate.order, {
+        stock_cover_days: Number(get('stock').value), annual_funding_rate: Number(get('rate').value) / 100,
+        initial_cash: Number(get('cash').value), daily_demand: Number(get('demand').value),
+        customer_payment_days: Number(get('payment').value)
       });
-      rows = HarborShieldCase.compare(current);
-      const body = document.getElementById('comparison-body'); body.replaceChildren();
-      rows.forEach(r => body.appendChild(cells([r.option, day(r.availability_day), money(r.logistics_cost),
-        money(r.stockout_opportunity_cost), money(r.funding_cost), money(r.economic_burden), money(r.net_economic_contribution)])));
-      document.getElementById('best-option').textContent = rows[0].option;
-      document.getElementById('best-burden').textContent = money(rows[0].economic_burden);
-      document.getElementById('peak-funding').textContent = money(rows[0].peak_funding_need);
-      document.getElementById('baseline-note').textContent = `同样订单、无额外港口等待：最低假设经济负担为 ${HarborShieldCase.compare(current, 0)[0].option}。方案是否实际可订舱仍需业务核实。`;
-      const select = document.getElementById('ledger-option'), previous = select.value;
-      select.replaceChildren();
-      rows.forEach(r => {const o = document.createElement('option'); o.value = r.option_id; o.textContent = r.option; select.appendChild(o);});
+      candidate.constraints = {
+        funding_limit: get('funding').value.trim() === '' ? null : Number(get('funding').value),
+        latest_availability_day: get('deadline').value.trim() === '' ? null : Number(get('deadline').value),
+        minimum_net_contribution: Number(get('minimum').value)
+      };
+      const computed = HarborShieldCase.compare(candidate);
+      current = candidate; rows = computed; decision = HarborShieldCase.decisionSummary(rows); valid = true;
+      const best = rows.find(r => r.option_id === decision.recommended_option_id);
+      const body = get('comparison-body'); body.replaceChildren();
+      rows.forEach(r => {
+        const tr = cells([name(r), day(r.availability_day), money(r.logistics_cost),
+          money(r.stockout_opportunity_cost), money(r.funding_cost), money(r.economic_burden),
+          money(r.net_economic_contribution), r.eligible ? t.eligible : r.ineligibility_reasons.map(code => t.reasons[code]).join('; ')]);
+        if (best && r.option_id === best.option_id) tr.classList.add('selected');
+        body.appendChild(tr);
+      });
+      get('best-option').textContent = best ? name(best) : t.no_eligible;
+      get('best-burden').textContent = best ? money(best.economic_burden) : '—';
+      get('peak-funding').textContent = best ? money(best.peak_funding_need) : '—';
+      notice.className = best ? 'decision-notice' : 'decision-notice warning';
+      notice.textContent = best ? t.valid_notice : t.none_notice;
+      get('unconstrained-note').textContent = t.unconstrained_prefix + name(rows[0]);
+      const baseline = HarborShieldCase.compare(current, 0);
+      get('baseline-note').textContent = t.baseline_prefix + summaryLabel(HarborShieldCase.decisionSummary(baseline), baseline);
+      const select = get('ledger-option'), previous = select.value; select.replaceChildren();
+      rows.forEach(r => {const o = document.createElement('option'); o.value = r.option_id; o.textContent = name(r); select.appendChild(o);});
       if (rows.some(r => r.option_id === previous)) select.value = previous;
-      drawLedger();
-      document.getElementById('current-result').textContent = JSON.stringify({data_status: 'Constructed assumptions, not observed savings', inputs: current, comparison: rows}, null, 2);
-      status.textContent = '已按当前假设重新计算 · 本机浏览器计算，无需上传资料';
-      document.getElementById('download-case').disabled = false;
+      else if (best) select.value = best.option_id;
+      select.disabled = false; drawLedger();
+      get('current-result').textContent = JSON.stringify(result(), null, 2);
+      status.textContent = t.updated; get('download-case').disabled = false;
+      const params = new URLSearchParams();
+      ids.forEach(id => params.set(id, get(id).value));
+      get('language-switch').href = t.switch_url + '?' + params.toString();
     } catch (error) {
-      status.textContent = `输入未通过：${error.message}。表中保留的是上次有效结果。`;
-      document.getElementById('download-case').disabled = true;
+      valid = false; status.textContent = t.invalid_status;
+      notice.className = 'decision-notice invalid'; notice.textContent = t.invalid;
+      get('best-option').textContent = '—'; get('best-burden').textContent = '—'; get('peak-funding').textContent = '—';
+      get('download-case').disabled = true; get('ledger-option').disabled = true;
+      get('current-result').textContent = t.invalid_status;
+      get('language-switch').href = t.switch_url;
+      get('unconstrained-note').textContent = ''; get('baseline-note').textContent = '';
+      get('comparison-body').querySelectorAll('.selected').forEach(row => row.classList.remove('selected'));
     }
   }
-  ids.forEach(id => document.getElementById(id).addEventListener('input', calculate));
-  document.getElementById('ledger-option').addEventListener('change', drawLedger);
-  document.getElementById('download-case').addEventListener('click', () => {
-    const blob = new Blob([JSON.stringify({data_status: 'Constructed assumptions, not observed savings', inputs: current, comparison: rows}, null, 2)], {type: 'application/json'});
+  const params = new URLSearchParams(window.location.search);
+  ids.forEach(id => {
+    if (params.has(id)) get(id).value = params.get(id);
+    get(id).addEventListener('input', calculate);
+  });
+  get('ledger-option').addEventListener('change', drawLedger);
+  get('download-case').addEventListener('click', () => {
+    if (!valid) return;
+    const blob = new Blob([JSON.stringify(result(), null, 2)], {type: 'application/json'});
     const url = URL.createObjectURL(blob), a = document.createElement('a');
     a.href = url; a.download = 'harborshield-case-result.json';
-    document.body.appendChild(a); a.click();
-    status.textContent = '已请求下载；若浏览器未开始下载，可展开 JSON 结果复制保存。';
-    // Keep the URL alive while browsers resolve the download navigation.
+    document.body.appendChild(a); a.click(); status.textContent = t.download_status;
     setTimeout(() => {a.remove(); URL.revokeObjectURL(url);}, 30000);
   });
-  document.getElementById('reset-case').addEventListener('click', () => {
+  get('reset-case').addEventListener('click', () => {
     const defaults = [fixture.selected_port_delay_days, fixture.order.stock_cover_days,
       fixture.order.annual_funding_rate * 100, fixture.order.initial_cash, fixture.order.daily_demand,
-      fixture.order.customer_payment_days];
-    ids.forEach((id, index) => {document.getElementById(id).value = defaults[index];}); calculate();
+      fixture.order.customer_payment_days, fixture.constraints.funding_limit ?? '',
+      fixture.constraints.latest_availability_day ?? '', fixture.constraints.minimum_net_contribution ?? 0];
+    ids.forEach((id, index) => {get(id).value = defaults[index];}); calculate();
   });
   calculate();
 })();

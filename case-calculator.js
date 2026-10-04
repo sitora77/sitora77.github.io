@@ -1,6 +1,7 @@
 /* Browser/Node counterpart of business_case.py. No network, accounts or credit decisions. */
 (function (root) {
   'use strict';
+  const MAX_EVENT_AMOUNT = 1e15;
   function number(record, key, min = 0, max = 1e9) {
     const value = record[key];
     if (typeof value !== 'number' || !Number.isFinite(value) || value < min || value > max) {
@@ -21,6 +22,14 @@
     number(o, 'supplier_deposit_fraction', 0, 1);
     number(o, 'annual_funding_rate', 0, 1);
     number(c, 'selected_port_delay_days', 0, 365);
+    const constraints = c.constraints === undefined ? {} : c.constraints;
+    if (!constraints || typeof constraints !== 'object' || Array.isArray(constraints)) throw new Error('constraints must be an object');
+    for (const [key, maximum] of [['funding_limit', MAX_EVENT_AMOUNT], ['latest_availability_day', 5000]]) {
+      if (constraints[key] != null) number(constraints, key, 0, maximum);
+    }
+    if ('minimum_net_contribution' in constraints) number(constraints, 'minimum_net_contribution', 0, MAX_EVENT_AMOUNT);
+    const purchase = o.quantity * o.unit_purchase_price, sales = o.quantity * o.unit_sale_price;
+    if (Math.max(purchase, sales) > MAX_EVENT_AMOUNT) throw new Error('Order values exceed supported 1e15 USD event limit');
     const ids = new Set();
     for (const option of c.options) {
       if (typeof option.id !== 'string' || !option.id || ids.has(option.id) || typeof option.name !== 'string' || !option.name) throw new Error('Unique option ids and names required');
@@ -28,6 +37,7 @@
       ['transit_days', 'document_release_days'].forEach(k => number(option, k, 0, 365));
       number(option, 'port_delay_multiplier', 0, 10);
       ['freight_cost', 'insurance_premium', 'other_logistics_cost'].forEach(k => number(option, k));
+      if (purchase + option.freight_cost + option.insurance_premium + option.other_logistics_cost > MAX_EVENT_AMOUNT) throw new Error('Purchase plus logistics exceeds supported 1e15 USD event limit');
     }
   }
   function fundingLedger(events, initialCash, rate) {
@@ -76,10 +86,25 @@
   }
   function compare(c, delay = c.selected_port_delay_days) {
     validateCase({...c, selected_port_delay_days: delay});
-    return c.options.map(p => evaluate(c.order, p, delay)).sort((a, b) =>
+    return c.options.map(p => {
+      const r = evaluate(c.order, p, delay), constraints = c.constraints || {}, reasons = [];
+      if (constraints.funding_limit != null && r.peak_funding_need > constraints.funding_limit) reasons.push('FUNDING_LIMIT_EXCEEDED');
+      if (constraints.latest_availability_day != null && r.availability_day > constraints.latest_availability_day) reasons.push('AVAILABILITY_DEADLINE_MISSED');
+      r.constraint_feasible = !reasons.length;
+      r.economically_acceptable = r.net_economic_contribution >= (constraints.minimum_net_contribution ?? 0);
+      if (!r.economically_acceptable) reasons.push('CONTRIBUTION_BELOW_MINIMUM');
+      return {...r, ineligibility_reasons: reasons, eligible: !reasons.length};
+    }).sort((a, b) =>
       a.economic_burden - b.economic_burden || a.option_id.localeCompare(b.option_id));
   }
-  const api = {validateCase, fundingLedger, compare};
+  function decisionSummary(rows) {
+    const eligible = rows.filter(r => r.eligible);
+    return {status: eligible.length ? 'eligible_option_found' : 'no_eligible_option',
+      recommended_option_id: eligible[0]?.option_id ?? null,
+      unconstrained_lowest_burden_option_id: rows[0]?.option_id ?? null,
+      eligible_option_count: eligible.length};
+  }
+  const api = {validateCase, fundingLedger, compare, decisionSummary};
   if (typeof module !== 'undefined' && module.exports) module.exports = api;
   else root.HarborShieldCase = api;
 })(globalThis);

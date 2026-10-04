@@ -1,10 +1,10 @@
 {
   "case_id": "SG-2024-PORT-DELAY",
-  "version": "0.3",
+  "version": "0.4",
   "data_status": "Constructed decision analysis, not observed savings or a financing offer",
   "inputs": {
     "case_id": "SG-2024-PORT-DELAY",
-    "version": "0.3",
+    "version": "0.4",
     "title": "Singapore 2024 port delay: a constructed SME replenishment decision",
     "data_status": "Public event context; all orders, prices, rates and option timings are constructed assumptions.",
     "sources": [
@@ -50,6 +50,17 @@
       "annual_funding_rate": 0.08
     },
     "selected_port_delay_days": 2.5,
+    "constraints": {
+      "funding_limit": 140000,
+      "latest_availability_day": 15,
+      "minimum_net_contribution": 0
+    },
+    "document_terms": {
+      "departure_date": "2024-05-20",
+      "cover_start": "2024-05-19",
+      "cover_end": "2024-06-30",
+      "valuation_multiplier": 1.1
+    },
     "options": [
       {
         "id": "standard_sea",
@@ -83,6 +94,7 @@
       }
     ],
     "assumptions": [
+      "The 140,000 USD external-funding limit, day-15 stock-availability deadline and zero minimum net contribution are constructed screening criteria, not confirmed credit or a contractual delivery commitment. Peak funding already deducts own cash. Null funding/deadline means not applied; zero is a binding limit. Cost ranking is retained even when no option is eligible.",
       "2.5 days is a constructed affected-shipment scenario inspired by the reported 2–3-day wait; it is not the mean for all Singapore arrivals.",
       "0 and 7 days are counterfactual sensitivity settings, not reported shipment observations.",
       "Every service option, freight amount, premium, interest rate, demand and document-release time is hypothetical. Priority capacity and alternate-port customs feasibility are unverified.",
@@ -135,7 +147,11 @@
       "funding_cost": 772.6465753424658,
       "peak_funding_need": 130200.0,
       "closing_cash_before_interest": 79800.0,
-      "residual_funding_need": 0.0
+      "residual_funding_need": 0.0,
+      "constraint_feasible": true,
+      "economically_acceptable": true,
+      "ineligibility_reasons": [],
+      "eligible": true
     },
     {
       "option_id": "sea_road",
@@ -179,7 +195,11 @@
       "funding_cost": 783.0849315068493,
       "peak_funding_need": 131400.0,
       "closing_cash_before_interest": 78600.0,
-      "residual_funding_need": 0.0
+      "residual_funding_need": 0.0,
+      "constraint_feasible": true,
+      "economically_acceptable": true,
+      "ineligibility_reasons": [],
+      "eligible": true
     },
     {
       "option_id": "standard_sea",
@@ -223,9 +243,19 @@
       "funding_cost": 833.9945205479452,
       "peak_funding_need": 128600.0,
       "closing_cash_before_interest": 81400.0,
-      "residual_funding_need": 0.0
+      "residual_funding_need": 0.0,
+      "constraint_feasible": true,
+      "economically_acceptable": true,
+      "ineligibility_reasons": [],
+      "eligible": true
     }
   ],
+  "selected_decision": {
+    "status": "eligible_option_found",
+    "recommended_option_id": "priority_sea",
+    "unconstrained_lowest_burden_option_id": "priority_sea",
+    "eligible_option_count": 3
+  },
   "no_port_delay_comparison": [
     {
       "option_id": "standard_sea",
@@ -269,7 +299,11 @@
       "funding_cost": 763.5287671232877,
       "peak_funding_need": 128600.0,
       "closing_cash_before_interest": 81400.0,
-      "residual_funding_need": 0.0
+      "residual_funding_need": 0.0,
+      "constraint_feasible": true,
+      "economically_acceptable": true,
+      "ineligibility_reasons": [],
+      "eligible": true
     },
     {
       "option_id": "priority_sea",
@@ -313,7 +347,11 @@
       "funding_cost": 701.3041095890411,
       "peak_funding_need": 130200.0,
       "closing_cash_before_interest": 79800.0,
-      "residual_funding_need": 0.0
+      "residual_funding_need": 0.0,
+      "constraint_feasible": true,
+      "economically_acceptable": true,
+      "ineligibility_reasons": [],
+      "eligible": true
     },
     {
       "option_id": "sea_road",
@@ -357,7 +395,11 @@
       "funding_cost": 765.0849315068493,
       "peak_funding_need": 131400.0,
       "closing_cash_before_interest": 78600.0,
-      "residual_funding_need": 0.0
+      "residual_funding_need": 0.0,
+      "constraint_feasible": true,
+      "economically_acceptable": true,
+      "ineligibility_reasons": [],
+      "eligible": true
     }
   ],
   "sensitivity": [
@@ -366,189 +408,952 @@
       "annual_funding_rate": 0.03,
       "stock_cover_days": 8,
       "lowest_burden_option": "priority_sea",
-      "minimum_economic_burden": 9062.98904109589
+      "minimum_economic_burden": 9062.98904109589,
+      "status": "eligible_option_found",
+      "recommended_option_id": "priority_sea",
+      "unconstrained_lowest_burden_option_id": "priority_sea",
+      "eligible_option_count": 3
     },
     {
       "port_delay_days": 0,
       "annual_funding_rate": 0.03,
       "stock_cover_days": 12,
       "lowest_burden_option": "standard_sea",
-      "minimum_economic_burden": 3886.3232876712327
+      "minimum_economic_burden": 3886.3232876712327,
+      "status": "eligible_option_found",
+      "recommended_option_id": "standard_sea",
+      "unconstrained_lowest_burden_option_id": "standard_sea",
+      "eligible_option_count": 3
     },
     {
       "port_delay_days": 0,
       "annual_funding_rate": 0.03,
       "stock_cover_days": 18,
       "lowest_burden_option": "standard_sea",
-      "minimum_economic_burden": 3886.3232876712327
+      "minimum_economic_burden": 3886.3232876712327,
+      "status": "eligible_option_found",
+      "recommended_option_id": "standard_sea",
+      "unconstrained_lowest_burden_option_id": "standard_sea",
+      "eligible_option_count": 3
     },
     {
       "port_delay_days": 0,
       "annual_funding_rate": 0.08,
       "stock_cover_days": 8,
       "lowest_burden_option": "priority_sea",
-      "minimum_economic_burden": 9501.30410958904
+      "minimum_economic_burden": 9501.30410958904,
+      "status": "eligible_option_found",
+      "recommended_option_id": "priority_sea",
+      "unconstrained_lowest_burden_option_id": "priority_sea",
+      "eligible_option_count": 3
     },
     {
       "port_delay_days": 0,
       "annual_funding_rate": 0.08,
       "stock_cover_days": 12,
       "lowest_burden_option": "standard_sea",
-      "minimum_economic_burden": 4363.528767123287
+      "minimum_economic_burden": 4363.528767123287,
+      "status": "eligible_option_found",
+      "recommended_option_id": "standard_sea",
+      "unconstrained_lowest_burden_option_id": "standard_sea",
+      "eligible_option_count": 3
     },
     {
       "port_delay_days": 0,
       "annual_funding_rate": 0.08,
       "stock_cover_days": 18,
       "lowest_burden_option": "standard_sea",
-      "minimum_economic_burden": 4363.528767123287
+      "minimum_economic_burden": 4363.528767123287,
+      "status": "eligible_option_found",
+      "recommended_option_id": "standard_sea",
+      "unconstrained_lowest_burden_option_id": "standard_sea",
+      "eligible_option_count": 3
     },
     {
       "port_delay_days": 0,
       "annual_funding_rate": 0.15,
       "stock_cover_days": 8,
       "lowest_burden_option": "priority_sea",
-      "minimum_economic_burden": 10114.945205479453
+      "minimum_economic_burden": 10114.945205479453,
+      "status": "eligible_option_found",
+      "recommended_option_id": "priority_sea",
+      "unconstrained_lowest_burden_option_id": "priority_sea",
+      "eligible_option_count": 3
     },
     {
       "port_delay_days": 0,
       "annual_funding_rate": 0.15,
       "stock_cover_days": 12,
       "lowest_burden_option": "standard_sea",
-      "minimum_economic_burden": 5031.6164383561645
+      "minimum_economic_burden": 5031.6164383561645,
+      "status": "eligible_option_found",
+      "recommended_option_id": "standard_sea",
+      "unconstrained_lowest_burden_option_id": "standard_sea",
+      "eligible_option_count": 3
     },
     {
       "port_delay_days": 0,
       "annual_funding_rate": 0.15,
       "stock_cover_days": 18,
       "lowest_burden_option": "standard_sea",
-      "minimum_economic_burden": 5031.6164383561645
+      "minimum_economic_burden": 5031.6164383561645,
+      "status": "eligible_option_found",
+      "recommended_option_id": "standard_sea",
+      "unconstrained_lowest_burden_option_id": "standard_sea",
+      "eligible_option_count": 3
     },
     {
       "port_delay_days": 2.5,
       "annual_funding_rate": 0.03,
       "stock_cover_days": 8,
       "lowest_burden_option": "priority_sea",
-      "minimum_economic_burden": 15089.742465753425
+      "minimum_economic_burden": 15089.742465753425,
+      "status": "eligible_option_found",
+      "recommended_option_id": "priority_sea",
+      "unconstrained_lowest_burden_option_id": "priority_sea",
+      "eligible_option_count": 3
     },
     {
       "port_delay_days": 2.5,
       "annual_funding_rate": 0.03,
       "stock_cover_days": 12,
       "lowest_burden_option": "priority_sea",
-      "minimum_economic_burden": 5489.742465753425
+      "minimum_economic_burden": 5489.742465753425,
+      "status": "eligible_option_found",
+      "recommended_option_id": "priority_sea",
+      "unconstrained_lowest_burden_option_id": "priority_sea",
+      "eligible_option_count": 3
     },
     {
       "port_delay_days": 2.5,
       "annual_funding_rate": 0.03,
       "stock_cover_days": 18,
       "lowest_burden_option": "standard_sea",
-      "minimum_economic_burden": 3912.7479452054795
+      "minimum_economic_burden": 3912.7479452054795,
+      "status": "eligible_option_found",
+      "recommended_option_id": "standard_sea",
+      "unconstrained_lowest_burden_option_id": "standard_sea",
+      "eligible_option_count": 3
     },
     {
       "port_delay_days": 2.5,
       "annual_funding_rate": 0.08,
       "stock_cover_days": 8,
       "lowest_burden_option": "priority_sea",
-      "minimum_economic_burden": 15572.646575342465
+      "minimum_economic_burden": 15572.646575342465,
+      "status": "eligible_option_found",
+      "recommended_option_id": "priority_sea",
+      "unconstrained_lowest_burden_option_id": "priority_sea",
+      "eligible_option_count": 3
     },
     {
       "port_delay_days": 2.5,
       "annual_funding_rate": 0.08,
       "stock_cover_days": 12,
       "lowest_burden_option": "priority_sea",
-      "minimum_economic_burden": 5972.646575342465
+      "minimum_economic_burden": 5972.646575342465,
+      "status": "eligible_option_found",
+      "recommended_option_id": "priority_sea",
+      "unconstrained_lowest_burden_option_id": "priority_sea",
+      "eligible_option_count": 3
     },
     {
       "port_delay_days": 2.5,
       "annual_funding_rate": 0.08,
       "stock_cover_days": 18,
       "lowest_burden_option": "standard_sea",
-      "minimum_economic_burden": 4433.994520547945
+      "minimum_economic_burden": 4433.994520547945,
+      "status": "eligible_option_found",
+      "recommended_option_id": "standard_sea",
+      "unconstrained_lowest_burden_option_id": "standard_sea",
+      "eligible_option_count": 3
     },
     {
       "port_delay_days": 2.5,
       "annual_funding_rate": 0.15,
       "stock_cover_days": 8,
       "lowest_burden_option": "priority_sea",
-      "minimum_economic_burden": 16248.712328767124
+      "minimum_economic_burden": 16248.712328767124,
+      "status": "eligible_option_found",
+      "recommended_option_id": "priority_sea",
+      "unconstrained_lowest_burden_option_id": "priority_sea",
+      "eligible_option_count": 3
     },
     {
       "port_delay_days": 2.5,
       "annual_funding_rate": 0.15,
       "stock_cover_days": 12,
       "lowest_burden_option": "priority_sea",
-      "minimum_economic_burden": 6648.712328767124
+      "minimum_economic_burden": 6648.712328767124,
+      "status": "eligible_option_found",
+      "recommended_option_id": "priority_sea",
+      "unconstrained_lowest_burden_option_id": "priority_sea",
+      "eligible_option_count": 3
     },
     {
       "port_delay_days": 2.5,
       "annual_funding_rate": 0.15,
       "stock_cover_days": 18,
       "lowest_burden_option": "standard_sea",
-      "minimum_economic_burden": 5163.739726027397
+      "minimum_economic_burden": 5163.739726027397,
+      "status": "eligible_option_found",
+      "recommended_option_id": "standard_sea",
+      "unconstrained_lowest_burden_option_id": "standard_sea",
+      "eligible_option_count": 3
     },
     {
       "port_delay_days": 7,
       "annual_funding_rate": 0.03,
       "stock_cover_days": 8,
       "lowest_burden_option": "sea_road",
-      "minimum_economic_burden": 19305.806849315068
+      "minimum_economic_burden": 19305.806849315068,
+      "status": "eligible_option_found",
+      "recommended_option_id": "sea_road",
+      "unconstrained_lowest_burden_option_id": "sea_road",
+      "eligible_option_count": 1
     },
     {
       "port_delay_days": 7,
       "annual_funding_rate": 0.03,
       "stock_cover_days": 12,
       "lowest_burden_option": "sea_road",
-      "minimum_economic_burden": 9705.806849315068
+      "minimum_economic_burden": 9705.806849315068,
+      "status": "eligible_option_found",
+      "recommended_option_id": "sea_road",
+      "unconstrained_lowest_burden_option_id": "sea_road",
+      "eligible_option_count": 1
     },
     {
       "port_delay_days": 7,
       "annual_funding_rate": 0.03,
       "stock_cover_days": 18,
       "lowest_burden_option": "priority_sea",
-      "minimum_economic_burden": 5537.898630136986
+      "minimum_economic_burden": 5537.898630136986,
+      "status": "eligible_option_found",
+      "recommended_option_id": "sea_road",
+      "unconstrained_lowest_burden_option_id": "priority_sea",
+      "eligible_option_count": 1
     },
     {
       "port_delay_days": 7,
       "annual_funding_rate": 0.08,
       "stock_cover_days": 8,
       "lowest_burden_option": "sea_road",
-      "minimum_economic_burden": 19815.48493150685
+      "minimum_economic_burden": 19815.48493150685,
+      "status": "eligible_option_found",
+      "recommended_option_id": "sea_road",
+      "unconstrained_lowest_burden_option_id": "sea_road",
+      "eligible_option_count": 1
     },
     {
       "port_delay_days": 7,
       "annual_funding_rate": 0.08,
       "stock_cover_days": 12,
       "lowest_burden_option": "sea_road",
-      "minimum_economic_burden": 10215.48493150685
+      "minimum_economic_burden": 10215.48493150685,
+      "status": "eligible_option_found",
+      "recommended_option_id": "sea_road",
+      "unconstrained_lowest_burden_option_id": "sea_road",
+      "eligible_option_count": 1
     },
     {
       "port_delay_days": 7,
       "annual_funding_rate": 0.08,
       "stock_cover_days": 18,
       "lowest_burden_option": "priority_sea",
-      "minimum_economic_burden": 6101.06301369863
+      "minimum_economic_burden": 6101.06301369863,
+      "status": "eligible_option_found",
+      "recommended_option_id": "sea_road",
+      "unconstrained_lowest_burden_option_id": "priority_sea",
+      "eligible_option_count": 1
     },
     {
       "port_delay_days": 7,
       "annual_funding_rate": 0.15,
       "stock_cover_days": 8,
       "lowest_burden_option": "sea_road",
-      "minimum_economic_burden": 20529.034246575342
+      "minimum_economic_burden": 20529.034246575342,
+      "status": "eligible_option_found",
+      "recommended_option_id": "sea_road",
+      "unconstrained_lowest_burden_option_id": "sea_road",
+      "eligible_option_count": 1
     },
     {
       "port_delay_days": 7,
       "annual_funding_rate": 0.15,
       "stock_cover_days": 12,
       "lowest_burden_option": "sea_road",
-      "minimum_economic_burden": 10929.034246575342
+      "minimum_economic_burden": 10929.034246575342,
+      "status": "eligible_option_found",
+      "recommended_option_id": "sea_road",
+      "unconstrained_lowest_burden_option_id": "sea_road",
+      "eligible_option_count": 1
     },
     {
       "port_delay_days": 7,
       "annual_funding_rate": 0.15,
       "stock_cover_days": 18,
       "lowest_burden_option": "priority_sea",
-      "minimum_economic_burden": 6889.493150684932
+      "minimum_economic_burden": 6889.493150684932,
+      "status": "eligible_option_found",
+      "recommended_option_id": "sea_road",
+      "unconstrained_lowest_burden_option_id": "priority_sea",
+      "eligible_option_count": 1
+    }
+  ],
+  "constraint_examples": [
+    {
+      "constraints": {
+        "funding_limit": 129000,
+        "latest_availability_day": 15,
+        "minimum_net_contribution": 0
+      },
+      "comparison": [
+        {
+          "option_id": "priority_sea",
+          "option": "Hypothetical priority service",
+          "currency": "USD",
+          "availability_day": 12.0,
+          "collection_day": 26.0,
+          "stockout_days": 0.0,
+          "unmet_units": 0.0,
+          "purchase_value": 150000,
+          "sales_receipt": 210000,
+          "planned_contribution": 60000,
+          "logistics_cost": 5200,
+          "stockout_opportunity_cost": 0.0,
+          "economic_burden": 5972.646575342465,
+          "net_economic_contribution": 54027.35342465754,
+          "events": [
+            {
+              "day": -7.0,
+              "event": "Supplier deposit",
+              "net_flow": -45000.0,
+              "cash_balance": -20000.0,
+              "funding_need": 20000.0
+            },
+            {
+              "day": 0.0,
+              "event": "Supplier balance; Logistics paid",
+              "net_flow": -110200.0,
+              "cash_balance": -130200.0,
+              "funding_need": 130200.0
+            },
+            {
+              "day": 26.0,
+              "event": "Constructed customer receipt",
+              "net_flow": 210000.0,
+              "cash_balance": 79800.0,
+              "funding_need": 0.0
+            }
+          ],
+          "funding_dollar_days": 3525200.0,
+          "funding_cost": 772.6465753424658,
+          "peak_funding_need": 130200.0,
+          "closing_cash_before_interest": 79800.0,
+          "residual_funding_need": 0.0,
+          "constraint_feasible": false,
+          "economically_acceptable": true,
+          "ineligibility_reasons": [
+            "FUNDING_LIMIT_EXCEEDED"
+          ],
+          "eligible": false
+        },
+        {
+          "option_id": "sea_road",
+          "option": "Hypothetical alternate-port + road",
+          "currency": "USD",
+          "availability_day": 12.125,
+          "collection_day": 26.125,
+          "stockout_days": 0.125,
+          "unmet_units": 25.0,
+          "purchase_value": 150000,
+          "sales_receipt": 210000,
+          "planned_contribution": 60000,
+          "logistics_cost": 6400,
+          "stockout_opportunity_cost": 300.0,
+          "economic_burden": 7483.084931506849,
+          "net_economic_contribution": 52516.91506849315,
+          "events": [
+            {
+              "day": -7.0,
+              "event": "Supplier deposit",
+              "net_flow": -45000.0,
+              "cash_balance": -20000.0,
+              "funding_need": 20000.0
+            },
+            {
+              "day": 0.0,
+              "event": "Supplier balance; Logistics paid",
+              "net_flow": -111400.0,
+              "cash_balance": -131400.0,
+              "funding_need": 131400.0
+            },
+            {
+              "day": 26.125,
+              "event": "Constructed customer receipt",
+              "net_flow": 210000.0,
+              "cash_balance": 78600.0,
+              "funding_need": 0.0
+            }
+          ],
+          "funding_dollar_days": 3572825.0,
+          "funding_cost": 783.0849315068493,
+          "peak_funding_need": 131400.0,
+          "closing_cash_before_interest": 78600.0,
+          "residual_funding_need": 0.0,
+          "constraint_feasible": false,
+          "economically_acceptable": true,
+          "ineligibility_reasons": [
+            "FUNDING_LIMIT_EXCEEDED"
+          ],
+          "eligible": false
+        },
+        {
+          "option_id": "standard_sea",
+          "option": "Standard sea service",
+          "currency": "USD",
+          "availability_day": 14.5,
+          "collection_day": 28.5,
+          "stockout_days": 2.5,
+          "unmet_units": 500.0,
+          "purchase_value": 150000,
+          "sales_receipt": 210000,
+          "planned_contribution": 60000,
+          "logistics_cost": 3600,
+          "stockout_opportunity_cost": 6000.0,
+          "economic_burden": 10433.994520547945,
+          "net_economic_contribution": 49566.005479452055,
+          "events": [
+            {
+              "day": -7.0,
+              "event": "Supplier deposit",
+              "net_flow": -45000.0,
+              "cash_balance": -20000.0,
+              "funding_need": 20000.0
+            },
+            {
+              "day": 0.0,
+              "event": "Supplier balance; Logistics paid",
+              "net_flow": -108600.0,
+              "cash_balance": -128600.0,
+              "funding_need": 128600.0
+            },
+            {
+              "day": 28.5,
+              "event": "Constructed customer receipt",
+              "net_flow": 210000.0,
+              "cash_balance": 81400.0,
+              "funding_need": 0.0
+            }
+          ],
+          "funding_dollar_days": 3805100.0,
+          "funding_cost": 833.9945205479452,
+          "peak_funding_need": 128600.0,
+          "closing_cash_before_interest": 81400.0,
+          "residual_funding_need": 0.0,
+          "constraint_feasible": true,
+          "economically_acceptable": true,
+          "ineligibility_reasons": [],
+          "eligible": true
+        }
+      ],
+      "status": "eligible_option_found",
+      "recommended_option_id": "standard_sea",
+      "unconstrained_lowest_burden_option_id": "priority_sea",
+      "eligible_option_count": 1
+    },
+    {
+      "constraints": {
+        "funding_limit": 129000,
+        "latest_availability_day": 12,
+        "minimum_net_contribution": 0
+      },
+      "comparison": [
+        {
+          "option_id": "priority_sea",
+          "option": "Hypothetical priority service",
+          "currency": "USD",
+          "availability_day": 12.0,
+          "collection_day": 26.0,
+          "stockout_days": 0.0,
+          "unmet_units": 0.0,
+          "purchase_value": 150000,
+          "sales_receipt": 210000,
+          "planned_contribution": 60000,
+          "logistics_cost": 5200,
+          "stockout_opportunity_cost": 0.0,
+          "economic_burden": 5972.646575342465,
+          "net_economic_contribution": 54027.35342465754,
+          "events": [
+            {
+              "day": -7.0,
+              "event": "Supplier deposit",
+              "net_flow": -45000.0,
+              "cash_balance": -20000.0,
+              "funding_need": 20000.0
+            },
+            {
+              "day": 0.0,
+              "event": "Supplier balance; Logistics paid",
+              "net_flow": -110200.0,
+              "cash_balance": -130200.0,
+              "funding_need": 130200.0
+            },
+            {
+              "day": 26.0,
+              "event": "Constructed customer receipt",
+              "net_flow": 210000.0,
+              "cash_balance": 79800.0,
+              "funding_need": 0.0
+            }
+          ],
+          "funding_dollar_days": 3525200.0,
+          "funding_cost": 772.6465753424658,
+          "peak_funding_need": 130200.0,
+          "closing_cash_before_interest": 79800.0,
+          "residual_funding_need": 0.0,
+          "constraint_feasible": false,
+          "economically_acceptable": true,
+          "ineligibility_reasons": [
+            "FUNDING_LIMIT_EXCEEDED"
+          ],
+          "eligible": false
+        },
+        {
+          "option_id": "sea_road",
+          "option": "Hypothetical alternate-port + road",
+          "currency": "USD",
+          "availability_day": 12.125,
+          "collection_day": 26.125,
+          "stockout_days": 0.125,
+          "unmet_units": 25.0,
+          "purchase_value": 150000,
+          "sales_receipt": 210000,
+          "planned_contribution": 60000,
+          "logistics_cost": 6400,
+          "stockout_opportunity_cost": 300.0,
+          "economic_burden": 7483.084931506849,
+          "net_economic_contribution": 52516.91506849315,
+          "events": [
+            {
+              "day": -7.0,
+              "event": "Supplier deposit",
+              "net_flow": -45000.0,
+              "cash_balance": -20000.0,
+              "funding_need": 20000.0
+            },
+            {
+              "day": 0.0,
+              "event": "Supplier balance; Logistics paid",
+              "net_flow": -111400.0,
+              "cash_balance": -131400.0,
+              "funding_need": 131400.0
+            },
+            {
+              "day": 26.125,
+              "event": "Constructed customer receipt",
+              "net_flow": 210000.0,
+              "cash_balance": 78600.0,
+              "funding_need": 0.0
+            }
+          ],
+          "funding_dollar_days": 3572825.0,
+          "funding_cost": 783.0849315068493,
+          "peak_funding_need": 131400.0,
+          "closing_cash_before_interest": 78600.0,
+          "residual_funding_need": 0.0,
+          "constraint_feasible": false,
+          "economically_acceptable": true,
+          "ineligibility_reasons": [
+            "FUNDING_LIMIT_EXCEEDED",
+            "AVAILABILITY_DEADLINE_MISSED"
+          ],
+          "eligible": false
+        },
+        {
+          "option_id": "standard_sea",
+          "option": "Standard sea service",
+          "currency": "USD",
+          "availability_day": 14.5,
+          "collection_day": 28.5,
+          "stockout_days": 2.5,
+          "unmet_units": 500.0,
+          "purchase_value": 150000,
+          "sales_receipt": 210000,
+          "planned_contribution": 60000,
+          "logistics_cost": 3600,
+          "stockout_opportunity_cost": 6000.0,
+          "economic_burden": 10433.994520547945,
+          "net_economic_contribution": 49566.005479452055,
+          "events": [
+            {
+              "day": -7.0,
+              "event": "Supplier deposit",
+              "net_flow": -45000.0,
+              "cash_balance": -20000.0,
+              "funding_need": 20000.0
+            },
+            {
+              "day": 0.0,
+              "event": "Supplier balance; Logistics paid",
+              "net_flow": -108600.0,
+              "cash_balance": -128600.0,
+              "funding_need": 128600.0
+            },
+            {
+              "day": 28.5,
+              "event": "Constructed customer receipt",
+              "net_flow": 210000.0,
+              "cash_balance": 81400.0,
+              "funding_need": 0.0
+            }
+          ],
+          "funding_dollar_days": 3805100.0,
+          "funding_cost": 833.9945205479452,
+          "peak_funding_need": 128600.0,
+          "closing_cash_before_interest": 81400.0,
+          "residual_funding_need": 0.0,
+          "constraint_feasible": false,
+          "economically_acceptable": true,
+          "ineligibility_reasons": [
+            "AVAILABILITY_DEADLINE_MISSED"
+          ],
+          "eligible": false
+        }
+      ],
+      "status": "no_eligible_option",
+      "recommended_option_id": null,
+      "unconstrained_lowest_burden_option_id": "priority_sea",
+      "eligible_option_count": 0
+    },
+    {
+      "constraints": {
+        "funding_limit": 130200,
+        "latest_availability_day": 12,
+        "minimum_net_contribution": 0
+      },
+      "comparison": [
+        {
+          "option_id": "priority_sea",
+          "option": "Hypothetical priority service",
+          "currency": "USD",
+          "availability_day": 12.0,
+          "collection_day": 26.0,
+          "stockout_days": 0.0,
+          "unmet_units": 0.0,
+          "purchase_value": 150000,
+          "sales_receipt": 210000,
+          "planned_contribution": 60000,
+          "logistics_cost": 5200,
+          "stockout_opportunity_cost": 0.0,
+          "economic_burden": 5972.646575342465,
+          "net_economic_contribution": 54027.35342465754,
+          "events": [
+            {
+              "day": -7.0,
+              "event": "Supplier deposit",
+              "net_flow": -45000.0,
+              "cash_balance": -20000.0,
+              "funding_need": 20000.0
+            },
+            {
+              "day": 0.0,
+              "event": "Supplier balance; Logistics paid",
+              "net_flow": -110200.0,
+              "cash_balance": -130200.0,
+              "funding_need": 130200.0
+            },
+            {
+              "day": 26.0,
+              "event": "Constructed customer receipt",
+              "net_flow": 210000.0,
+              "cash_balance": 79800.0,
+              "funding_need": 0.0
+            }
+          ],
+          "funding_dollar_days": 3525200.0,
+          "funding_cost": 772.6465753424658,
+          "peak_funding_need": 130200.0,
+          "closing_cash_before_interest": 79800.0,
+          "residual_funding_need": 0.0,
+          "constraint_feasible": true,
+          "economically_acceptable": true,
+          "ineligibility_reasons": [],
+          "eligible": true
+        },
+        {
+          "option_id": "sea_road",
+          "option": "Hypothetical alternate-port + road",
+          "currency": "USD",
+          "availability_day": 12.125,
+          "collection_day": 26.125,
+          "stockout_days": 0.125,
+          "unmet_units": 25.0,
+          "purchase_value": 150000,
+          "sales_receipt": 210000,
+          "planned_contribution": 60000,
+          "logistics_cost": 6400,
+          "stockout_opportunity_cost": 300.0,
+          "economic_burden": 7483.084931506849,
+          "net_economic_contribution": 52516.91506849315,
+          "events": [
+            {
+              "day": -7.0,
+              "event": "Supplier deposit",
+              "net_flow": -45000.0,
+              "cash_balance": -20000.0,
+              "funding_need": 20000.0
+            },
+            {
+              "day": 0.0,
+              "event": "Supplier balance; Logistics paid",
+              "net_flow": -111400.0,
+              "cash_balance": -131400.0,
+              "funding_need": 131400.0
+            },
+            {
+              "day": 26.125,
+              "event": "Constructed customer receipt",
+              "net_flow": 210000.0,
+              "cash_balance": 78600.0,
+              "funding_need": 0.0
+            }
+          ],
+          "funding_dollar_days": 3572825.0,
+          "funding_cost": 783.0849315068493,
+          "peak_funding_need": 131400.0,
+          "closing_cash_before_interest": 78600.0,
+          "residual_funding_need": 0.0,
+          "constraint_feasible": false,
+          "economically_acceptable": true,
+          "ineligibility_reasons": [
+            "FUNDING_LIMIT_EXCEEDED",
+            "AVAILABILITY_DEADLINE_MISSED"
+          ],
+          "eligible": false
+        },
+        {
+          "option_id": "standard_sea",
+          "option": "Standard sea service",
+          "currency": "USD",
+          "availability_day": 14.5,
+          "collection_day": 28.5,
+          "stockout_days": 2.5,
+          "unmet_units": 500.0,
+          "purchase_value": 150000,
+          "sales_receipt": 210000,
+          "planned_contribution": 60000,
+          "logistics_cost": 3600,
+          "stockout_opportunity_cost": 6000.0,
+          "economic_burden": 10433.994520547945,
+          "net_economic_contribution": 49566.005479452055,
+          "events": [
+            {
+              "day": -7.0,
+              "event": "Supplier deposit",
+              "net_flow": -45000.0,
+              "cash_balance": -20000.0,
+              "funding_need": 20000.0
+            },
+            {
+              "day": 0.0,
+              "event": "Supplier balance; Logistics paid",
+              "net_flow": -108600.0,
+              "cash_balance": -128600.0,
+              "funding_need": 128600.0
+            },
+            {
+              "day": 28.5,
+              "event": "Constructed customer receipt",
+              "net_flow": 210000.0,
+              "cash_balance": 81400.0,
+              "funding_need": 0.0
+            }
+          ],
+          "funding_dollar_days": 3805100.0,
+          "funding_cost": 833.9945205479452,
+          "peak_funding_need": 128600.0,
+          "closing_cash_before_interest": 81400.0,
+          "residual_funding_need": 0.0,
+          "constraint_feasible": false,
+          "economically_acceptable": true,
+          "ineligibility_reasons": [
+            "AVAILABILITY_DEADLINE_MISSED"
+          ],
+          "eligible": false
+        }
+      ],
+      "status": "eligible_option_found",
+      "recommended_option_id": "priority_sea",
+      "unconstrained_lowest_burden_option_id": "priority_sea",
+      "eligible_option_count": 1
+    },
+    {
+      "constraints": {
+        "funding_limit": 0,
+        "latest_availability_day": 0,
+        "minimum_net_contribution": 0
+      },
+      "comparison": [
+        {
+          "option_id": "priority_sea",
+          "option": "Hypothetical priority service",
+          "currency": "USD",
+          "availability_day": 12.0,
+          "collection_day": 26.0,
+          "stockout_days": 0.0,
+          "unmet_units": 0.0,
+          "purchase_value": 150000,
+          "sales_receipt": 210000,
+          "planned_contribution": 60000,
+          "logistics_cost": 5200,
+          "stockout_opportunity_cost": 0.0,
+          "economic_burden": 5972.646575342465,
+          "net_economic_contribution": 54027.35342465754,
+          "events": [
+            {
+              "day": -7.0,
+              "event": "Supplier deposit",
+              "net_flow": -45000.0,
+              "cash_balance": -20000.0,
+              "funding_need": 20000.0
+            },
+            {
+              "day": 0.0,
+              "event": "Supplier balance; Logistics paid",
+              "net_flow": -110200.0,
+              "cash_balance": -130200.0,
+              "funding_need": 130200.0
+            },
+            {
+              "day": 26.0,
+              "event": "Constructed customer receipt",
+              "net_flow": 210000.0,
+              "cash_balance": 79800.0,
+              "funding_need": 0.0
+            }
+          ],
+          "funding_dollar_days": 3525200.0,
+          "funding_cost": 772.6465753424658,
+          "peak_funding_need": 130200.0,
+          "closing_cash_before_interest": 79800.0,
+          "residual_funding_need": 0.0,
+          "constraint_feasible": false,
+          "economically_acceptable": true,
+          "ineligibility_reasons": [
+            "FUNDING_LIMIT_EXCEEDED",
+            "AVAILABILITY_DEADLINE_MISSED"
+          ],
+          "eligible": false
+        },
+        {
+          "option_id": "sea_road",
+          "option": "Hypothetical alternate-port + road",
+          "currency": "USD",
+          "availability_day": 12.125,
+          "collection_day": 26.125,
+          "stockout_days": 0.125,
+          "unmet_units": 25.0,
+          "purchase_value": 150000,
+          "sales_receipt": 210000,
+          "planned_contribution": 60000,
+          "logistics_cost": 6400,
+          "stockout_opportunity_cost": 300.0,
+          "economic_burden": 7483.084931506849,
+          "net_economic_contribution": 52516.91506849315,
+          "events": [
+            {
+              "day": -7.0,
+              "event": "Supplier deposit",
+              "net_flow": -45000.0,
+              "cash_balance": -20000.0,
+              "funding_need": 20000.0
+            },
+            {
+              "day": 0.0,
+              "event": "Supplier balance; Logistics paid",
+              "net_flow": -111400.0,
+              "cash_balance": -131400.0,
+              "funding_need": 131400.0
+            },
+            {
+              "day": 26.125,
+              "event": "Constructed customer receipt",
+              "net_flow": 210000.0,
+              "cash_balance": 78600.0,
+              "funding_need": 0.0
+            }
+          ],
+          "funding_dollar_days": 3572825.0,
+          "funding_cost": 783.0849315068493,
+          "peak_funding_need": 131400.0,
+          "closing_cash_before_interest": 78600.0,
+          "residual_funding_need": 0.0,
+          "constraint_feasible": false,
+          "economically_acceptable": true,
+          "ineligibility_reasons": [
+            "FUNDING_LIMIT_EXCEEDED",
+            "AVAILABILITY_DEADLINE_MISSED"
+          ],
+          "eligible": false
+        },
+        {
+          "option_id": "standard_sea",
+          "option": "Standard sea service",
+          "currency": "USD",
+          "availability_day": 14.5,
+          "collection_day": 28.5,
+          "stockout_days": 2.5,
+          "unmet_units": 500.0,
+          "purchase_value": 150000,
+          "sales_receipt": 210000,
+          "planned_contribution": 60000,
+          "logistics_cost": 3600,
+          "stockout_opportunity_cost": 6000.0,
+          "economic_burden": 10433.994520547945,
+          "net_economic_contribution": 49566.005479452055,
+          "events": [
+            {
+              "day": -7.0,
+              "event": "Supplier deposit",
+              "net_flow": -45000.0,
+              "cash_balance": -20000.0,
+              "funding_need": 20000.0
+            },
+            {
+              "day": 0.0,
+              "event": "Supplier balance; Logistics paid",
+              "net_flow": -108600.0,
+              "cash_balance": -128600.0,
+              "funding_need": 128600.0
+            },
+            {
+              "day": 28.5,
+              "event": "Constructed customer receipt",
+              "net_flow": 210000.0,
+              "cash_balance": 81400.0,
+              "funding_need": 0.0
+            }
+          ],
+          "funding_dollar_days": 3805100.0,
+          "funding_cost": 833.9945205479452,
+          "peak_funding_need": 128600.0,
+          "closing_cash_before_interest": 81400.0,
+          "residual_funding_need": 0.0,
+          "constraint_feasible": false,
+          "economically_acceptable": true,
+          "ineligibility_reasons": [
+            "FUNDING_LIMIT_EXCEEDED",
+            "AVAILABILITY_DEADLINE_MISSED"
+          ],
+          "eligible": false
+        }
+      ],
+      "status": "no_eligible_option",
+      "recommended_option_id": null,
+      "unconstrained_lowest_burden_option_id": "priority_sea",
+      "eligible_option_count": 0
     }
   ],
   "document_evidence": {

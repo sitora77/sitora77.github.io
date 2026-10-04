@@ -1,17 +1,149 @@
 {
-  "data_status": "Entirely constructed JSON fixtures; no real customer or company documents.",
+  "data_status": "Constructed, AI-assisted educational demonstration; not issuer-approved documents",
   "invoice": {
-    "document_id": "DEMO-INV-001", "order_id": "DEMO-SG-001", "currency": "USD",
-    "departure_date": "2024-05-20", "total_value": 150000,
-    "items": [{"sku": "DEMO-ELECTRONIC", "quantity": 5000, "unit_price": 30}]
+    "order_id": "DEMO-SG-001",
+    "currency": "USD",
+    "document_id": "DEMO-INV-001",
+    "departure_date": "2024-05-20",
+    "total_value": 150000.0,
+    "items": [
+      {
+        "sku": "DEMO-ELECTRONIC",
+        "quantity": 5000,
+        "unit_price": 30
+      }
+    ]
   },
   "packing_list": {
-    "document_id": "DEMO-PACK-001", "order_id": "DEMO-SG-001", "currency": "USD",
-    "items": [{"sku": "DEMO-ELECTRONIC", "quantity": 5000}]
+    "order_id": "DEMO-SG-001",
+    "currency": "USD",
+    "document_id": "DEMO-PACK-001",
+    "items": [
+      {
+        "sku": "DEMO-ELECTRONIC",
+        "quantity": 5000
+      }
+    ]
   },
   "insurance_application": {
-    "document_id": "DEMO-INS-001", "order_id": "DEMO-SG-001", "currency": "USD",
-    "cargo_value": 150000, "valuation_multiplier": 1.1, "requested_insured_value": 165000,
-    "cover_start": "2024-05-19", "cover_end": "2024-06-30"
+    "order_id": "DEMO-SG-001",
+    "currency": "USD",
+    "document_id": "DEMO-INS-001",
+    "cargo_value": 150000.0,
+    "valuation_multiplier": 1.1,
+    "requested_insured_value": 165000.0,
+    "cover_start": "2024-05-19",
+    "cover_end": "2024-06-30"
+  },
+  "case_context": {
+    "inputs": {
+      "case_id": "SG-2024-PORT-DELAY",
+      "version": "0.4",
+      "title": "Singapore 2024 port delay: a constructed SME replenishment decision",
+      "data_status": "Public event context; all orders, prices, rates and option timings are constructed assumptions.",
+      "sources": [
+        {
+          "id": "mpa_20240530",
+          "title": "MPA response on extended waiting times, 30 May 2024",
+          "url": "https://www.mpa.gov.sg/media-centre/details/in-response-to-media-queries-on--vessels--extended-waiting-times-for-berths-in-the-port-of-singapore",
+          "published": "2024-05-30",
+          "accessed": "2026-10-04",
+          "facts": [
+            "MPA linked off-schedule arrivals and vessel bunching to upstream disruptions and Cape of Good Hope diversions.",
+            "Most container vessels berthed on arrival. Where schedule adjustment was infeasible, average waiting was about 2–3 days.",
+            "January–April 2024 container throughput was 13.36 million TEU, up 8.8% year on year.",
+            "Additional resources raised stated weekly handling capacity from 770,000 to 820,000 TEU."
+          ],
+          "not_supported": "This statement does not provide shipment-level arrival observations, a delay probability distribution, freight quotes or insurance rates."
+        },
+        {
+          "id": "tradetrust_20230825",
+          "title": "TradeTrust Singapore–India trade-finance transaction, 25 August 2023",
+          "url": "https://www.tradetrust.io/happenings-and-resources/press-release-singapore-india-kick-off-interoperable-ebills-of-lading-for-trade-finance/",
+          "published": "2023-08-25",
+          "accessed": "2026-10-04",
+          "facts": [
+            "The documented physical shipment was scrap metal from Miami to Gujarat.",
+            "DBS, ICICI Bank, traders and Maersk participated in a paperless eBL and letter-of-credit workflow with documentary checks and title transfers."
+          ],
+          "not_supported": "HarborShield has no access to those transaction documents and no bank, TradeTrust or eBL title-transfer integration."
+        }
+      ],
+      "order": {
+        "order_id": "DEMO-SG-001",
+        "currency": "USD",
+        "quantity": 5000,
+        "unit_purchase_price": 30,
+        "unit_sale_price": 42,
+        "daily_demand": 200,
+        "stock_cover_days": 12,
+        "supplier_deposit_fraction": 0.3,
+        "supplier_deposit_day": -7,
+        "customer_payment_days": 14,
+        "initial_cash": 25000,
+        "annual_funding_rate": 0.08
+      },
+      "selected_port_delay_days": 2.5,
+      "constraints": {
+        "funding_limit": 140000,
+        "latest_availability_day": 15,
+        "minimum_net_contribution": 0
+      },
+      "document_terms": {
+        "departure_date": "2024-05-20",
+        "cover_start": "2024-05-19",
+        "cover_end": "2024-06-30",
+        "valuation_multiplier": 1.1
+      },
+      "options": [
+        {
+          "id": "standard_sea",
+          "name": "Standard sea service",
+          "transit_days": 11,
+          "port_delay_multiplier": 1,
+          "document_release_days": 1,
+          "freight_cost": 3200,
+          "insurance_premium": 400,
+          "other_logistics_cost": 0
+        },
+        {
+          "id": "priority_sea",
+          "name": "Hypothetical priority service",
+          "transit_days": 9,
+          "port_delay_multiplier": 1,
+          "document_release_days": 0.5,
+          "freight_cost": 4800,
+          "insurance_premium": 400,
+          "other_logistics_cost": 0
+        },
+        {
+          "id": "sea_road",
+          "name": "Hypothetical alternate-port + road",
+          "transit_days": 10,
+          "port_delay_multiplier": 0.25,
+          "document_release_days": 1.5,
+          "freight_cost": 5900,
+          "insurance_premium": 500,
+          "other_logistics_cost": 0
+        }
+      ],
+      "assumptions": [
+        "The 140,000 USD external-funding limit, day-15 stock-availability deadline and zero minimum net contribution are constructed screening criteria, not confirmed credit or a contractual delivery commitment. Peak funding already deducts own cash. Null funding/deadline means not applied; zero is a binding limit. Cost ranking is retained even when no option is eligible.",
+        "2.5 days is a constructed affected-shipment scenario inspired by the reported 2–3-day wait; it is not the mean for all Singapore arrivals.",
+        "0 and 7 days are counterfactual sensitivity settings, not reported shipment observations.",
+        "Every service option, freight amount, premium, interest rate, demand and document-release time is hypothetical. Priority capacity and alternate-port customs feasibility are unverified.",
+        "The entire replenishment order is eventually sold, with one simplified receipt after availability plus the payment term. Existing-stock sales and other business cash flows are excluded.",
+        "Pre-arrival unmet demand is lost rather than backordered. Its lost unit contribution is an opportunity cost, not a second cash payment or a reduction of this order's assumed sales receipt.",
+        "Simple interest on negative incremental cash balance is calculated only until customer collection. No credit approval, taxes, FX, compound interest or future residual-debt repayment is modelled.",
+        "This deterministic case is separate from the uncalibrated v0.2 stochastic insurance model; no daily-delay charge is added again."
+      ]
+    },
+    "decision": {
+      "status": "eligible_option_found",
+      "recommended_option_id": "priority_sea",
+      "unconstrained_lowest_burden_option_id": "priority_sea",
+      "eligible_option_count": 3
+    },
+    "inputs_sha256": "a43807ec45ebe604b663f5f7b9e0a0c07185cd5aef63545057d86db5a7a36f24"
   }
 }
