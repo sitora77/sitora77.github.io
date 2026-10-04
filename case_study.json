@@ -1,0 +1,653 @@
+{
+  "case_id": "SG-2024-PORT-DELAY",
+  "version": "0.3",
+  "data_status": "Constructed decision analysis, not observed savings or a financing offer",
+  "inputs": {
+    "case_id": "SG-2024-PORT-DELAY",
+    "version": "0.3",
+    "title": "Singapore 2024 port delay: a constructed SME replenishment decision",
+    "data_status": "Public event context; all orders, prices, rates and option timings are constructed assumptions.",
+    "sources": [
+      {
+        "id": "mpa_20240530",
+        "title": "MPA response on extended waiting times, 30 May 2024",
+        "url": "https://www.mpa.gov.sg/media-centre/details/in-response-to-media-queries-on--vessels--extended-waiting-times-for-berths-in-the-port-of-singapore",
+        "published": "2024-05-30",
+        "accessed": "2026-10-04",
+        "facts": [
+          "MPA linked off-schedule arrivals and vessel bunching to upstream disruptions and Cape of Good Hope diversions.",
+          "Most container vessels berthed on arrival. Where schedule adjustment was infeasible, average waiting was about 2–3 days.",
+          "January–April 2024 container throughput was 13.36 million TEU, up 8.8% year on year.",
+          "Additional resources raised stated weekly handling capacity from 770,000 to 820,000 TEU."
+        ],
+        "not_supported": "This statement does not provide shipment-level arrival observations, a delay probability distribution, freight quotes or insurance rates."
+      },
+      {
+        "id": "tradetrust_20230825",
+        "title": "TradeTrust Singapore–India trade-finance transaction, 25 August 2023",
+        "url": "https://www.tradetrust.io/happenings-and-resources/press-release-singapore-india-kick-off-interoperable-ebills-of-lading-for-trade-finance/",
+        "published": "2023-08-25",
+        "accessed": "2026-10-04",
+        "facts": [
+          "The documented physical shipment was scrap metal from Miami to Gujarat.",
+          "DBS, ICICI Bank, traders and Maersk participated in a paperless eBL and letter-of-credit workflow with documentary checks and title transfers."
+        ],
+        "not_supported": "HarborShield has no access to those transaction documents and no bank, TradeTrust or eBL title-transfer integration."
+      }
+    ],
+    "order": {
+      "order_id": "DEMO-SG-001",
+      "currency": "USD",
+      "quantity": 5000,
+      "unit_purchase_price": 30,
+      "unit_sale_price": 42,
+      "daily_demand": 200,
+      "stock_cover_days": 12,
+      "supplier_deposit_fraction": 0.3,
+      "supplier_deposit_day": -7,
+      "customer_payment_days": 14,
+      "initial_cash": 25000,
+      "annual_funding_rate": 0.08
+    },
+    "selected_port_delay_days": 2.5,
+    "options": [
+      {
+        "id": "standard_sea",
+        "name": "Standard sea service",
+        "transit_days": 11,
+        "port_delay_multiplier": 1,
+        "document_release_days": 1,
+        "freight_cost": 3200,
+        "insurance_premium": 400,
+        "other_logistics_cost": 0
+      },
+      {
+        "id": "priority_sea",
+        "name": "Hypothetical priority service",
+        "transit_days": 9,
+        "port_delay_multiplier": 1,
+        "document_release_days": 0.5,
+        "freight_cost": 4800,
+        "insurance_premium": 400,
+        "other_logistics_cost": 0
+      },
+      {
+        "id": "sea_road",
+        "name": "Hypothetical alternate-port + road",
+        "transit_days": 10,
+        "port_delay_multiplier": 0.25,
+        "document_release_days": 1.5,
+        "freight_cost": 5900,
+        "insurance_premium": 500,
+        "other_logistics_cost": 0
+      }
+    ],
+    "assumptions": [
+      "2.5 days is a constructed affected-shipment scenario inspired by the reported 2–3-day wait; it is not the mean for all Singapore arrivals.",
+      "0 and 7 days are counterfactual sensitivity settings, not reported shipment observations.",
+      "Every service option, freight amount, premium, interest rate, demand and document-release time is hypothetical. Priority capacity and alternate-port customs feasibility are unverified.",
+      "The entire replenishment order is eventually sold, with one simplified receipt after availability plus the payment term. Existing-stock sales and other business cash flows are excluded.",
+      "Pre-arrival unmet demand is lost rather than backordered. Its lost unit contribution is an opportunity cost, not a second cash payment or a reduction of this order's assumed sales receipt.",
+      "Simple interest on negative incremental cash balance is calculated only until customer collection. No credit approval, taxes, FX, compound interest or future residual-debt repayment is modelled.",
+      "This deterministic case is separate from the uncalibrated v0.2 stochastic insurance model; no daily-delay charge is added again."
+    ]
+  },
+  "selected_comparison": [
+    {
+      "option_id": "priority_sea",
+      "option": "Hypothetical priority service",
+      "currency": "USD",
+      "availability_day": 12.0,
+      "collection_day": 26.0,
+      "stockout_days": 0.0,
+      "unmet_units": 0.0,
+      "purchase_value": 150000,
+      "sales_receipt": 210000,
+      "planned_contribution": 60000,
+      "logistics_cost": 5200,
+      "stockout_opportunity_cost": 0.0,
+      "economic_burden": 5972.646575342465,
+      "net_economic_contribution": 54027.35342465754,
+      "events": [
+        {
+          "day": -7.0,
+          "event": "Supplier deposit",
+          "net_flow": -45000.0,
+          "cash_balance": -20000.0,
+          "funding_need": 20000.0
+        },
+        {
+          "day": 0.0,
+          "event": "Supplier balance; Logistics paid",
+          "net_flow": -110200.0,
+          "cash_balance": -130200.0,
+          "funding_need": 130200.0
+        },
+        {
+          "day": 26.0,
+          "event": "Constructed customer receipt",
+          "net_flow": 210000.0,
+          "cash_balance": 79800.0,
+          "funding_need": 0.0
+        }
+      ],
+      "funding_dollar_days": 3525200.0,
+      "funding_cost": 772.6465753424658,
+      "peak_funding_need": 130200.0,
+      "closing_cash_before_interest": 79800.0,
+      "residual_funding_need": 0.0
+    },
+    {
+      "option_id": "sea_road",
+      "option": "Hypothetical alternate-port + road",
+      "currency": "USD",
+      "availability_day": 12.125,
+      "collection_day": 26.125,
+      "stockout_days": 0.125,
+      "unmet_units": 25.0,
+      "purchase_value": 150000,
+      "sales_receipt": 210000,
+      "planned_contribution": 60000,
+      "logistics_cost": 6400,
+      "stockout_opportunity_cost": 300.0,
+      "economic_burden": 7483.084931506849,
+      "net_economic_contribution": 52516.91506849315,
+      "events": [
+        {
+          "day": -7.0,
+          "event": "Supplier deposit",
+          "net_flow": -45000.0,
+          "cash_balance": -20000.0,
+          "funding_need": 20000.0
+        },
+        {
+          "day": 0.0,
+          "event": "Supplier balance; Logistics paid",
+          "net_flow": -111400.0,
+          "cash_balance": -131400.0,
+          "funding_need": 131400.0
+        },
+        {
+          "day": 26.125,
+          "event": "Constructed customer receipt",
+          "net_flow": 210000.0,
+          "cash_balance": 78600.0,
+          "funding_need": 0.0
+        }
+      ],
+      "funding_dollar_days": 3572825.0,
+      "funding_cost": 783.0849315068493,
+      "peak_funding_need": 131400.0,
+      "closing_cash_before_interest": 78600.0,
+      "residual_funding_need": 0.0
+    },
+    {
+      "option_id": "standard_sea",
+      "option": "Standard sea service",
+      "currency": "USD",
+      "availability_day": 14.5,
+      "collection_day": 28.5,
+      "stockout_days": 2.5,
+      "unmet_units": 500.0,
+      "purchase_value": 150000,
+      "sales_receipt": 210000,
+      "planned_contribution": 60000,
+      "logistics_cost": 3600,
+      "stockout_opportunity_cost": 6000.0,
+      "economic_burden": 10433.994520547945,
+      "net_economic_contribution": 49566.005479452055,
+      "events": [
+        {
+          "day": -7.0,
+          "event": "Supplier deposit",
+          "net_flow": -45000.0,
+          "cash_balance": -20000.0,
+          "funding_need": 20000.0
+        },
+        {
+          "day": 0.0,
+          "event": "Supplier balance; Logistics paid",
+          "net_flow": -108600.0,
+          "cash_balance": -128600.0,
+          "funding_need": 128600.0
+        },
+        {
+          "day": 28.5,
+          "event": "Constructed customer receipt",
+          "net_flow": 210000.0,
+          "cash_balance": 81400.0,
+          "funding_need": 0.0
+        }
+      ],
+      "funding_dollar_days": 3805100.0,
+      "funding_cost": 833.9945205479452,
+      "peak_funding_need": 128600.0,
+      "closing_cash_before_interest": 81400.0,
+      "residual_funding_need": 0.0
+    }
+  ],
+  "no_port_delay_comparison": [
+    {
+      "option_id": "standard_sea",
+      "option": "Standard sea service",
+      "currency": "USD",
+      "availability_day": 12,
+      "collection_day": 26,
+      "stockout_days": 0,
+      "unmet_units": 0,
+      "purchase_value": 150000,
+      "sales_receipt": 210000,
+      "planned_contribution": 60000,
+      "logistics_cost": 3600,
+      "stockout_opportunity_cost": 0,
+      "economic_burden": 4363.528767123287,
+      "net_economic_contribution": 55636.47123287671,
+      "events": [
+        {
+          "day": -7.0,
+          "event": "Supplier deposit",
+          "net_flow": -45000.0,
+          "cash_balance": -20000.0,
+          "funding_need": 20000.0
+        },
+        {
+          "day": 0.0,
+          "event": "Supplier balance; Logistics paid",
+          "net_flow": -108600.0,
+          "cash_balance": -128600.0,
+          "funding_need": 128600.0
+        },
+        {
+          "day": 26.0,
+          "event": "Constructed customer receipt",
+          "net_flow": 210000.0,
+          "cash_balance": 81400.0,
+          "funding_need": 0.0
+        }
+      ],
+      "funding_dollar_days": 3483600.0,
+      "funding_cost": 763.5287671232877,
+      "peak_funding_need": 128600.0,
+      "closing_cash_before_interest": 81400.0,
+      "residual_funding_need": 0.0
+    },
+    {
+      "option_id": "priority_sea",
+      "option": "Hypothetical priority service",
+      "currency": "USD",
+      "availability_day": 9.5,
+      "collection_day": 23.5,
+      "stockout_days": 0,
+      "unmet_units": 0,
+      "purchase_value": 150000,
+      "sales_receipt": 210000,
+      "planned_contribution": 60000,
+      "logistics_cost": 5200,
+      "stockout_opportunity_cost": 0,
+      "economic_burden": 5901.304109589041,
+      "net_economic_contribution": 54098.695890410956,
+      "events": [
+        {
+          "day": -7.0,
+          "event": "Supplier deposit",
+          "net_flow": -45000.0,
+          "cash_balance": -20000.0,
+          "funding_need": 20000.0
+        },
+        {
+          "day": 0.0,
+          "event": "Supplier balance; Logistics paid",
+          "net_flow": -110200.0,
+          "cash_balance": -130200.0,
+          "funding_need": 130200.0
+        },
+        {
+          "day": 23.5,
+          "event": "Constructed customer receipt",
+          "net_flow": 210000.0,
+          "cash_balance": 79800.0,
+          "funding_need": 0.0
+        }
+      ],
+      "funding_dollar_days": 3199700.0,
+      "funding_cost": 701.3041095890411,
+      "peak_funding_need": 130200.0,
+      "closing_cash_before_interest": 79800.0,
+      "residual_funding_need": 0.0
+    },
+    {
+      "option_id": "sea_road",
+      "option": "Hypothetical alternate-port + road",
+      "currency": "USD",
+      "availability_day": 11.5,
+      "collection_day": 25.5,
+      "stockout_days": 0,
+      "unmet_units": 0,
+      "purchase_value": 150000,
+      "sales_receipt": 210000,
+      "planned_contribution": 60000,
+      "logistics_cost": 6400,
+      "stockout_opportunity_cost": 0,
+      "economic_burden": 7165.084931506849,
+      "net_economic_contribution": 52834.91506849315,
+      "events": [
+        {
+          "day": -7.0,
+          "event": "Supplier deposit",
+          "net_flow": -45000.0,
+          "cash_balance": -20000.0,
+          "funding_need": 20000.0
+        },
+        {
+          "day": 0.0,
+          "event": "Supplier balance; Logistics paid",
+          "net_flow": -111400.0,
+          "cash_balance": -131400.0,
+          "funding_need": 131400.0
+        },
+        {
+          "day": 25.5,
+          "event": "Constructed customer receipt",
+          "net_flow": 210000.0,
+          "cash_balance": 78600.0,
+          "funding_need": 0.0
+        }
+      ],
+      "funding_dollar_days": 3490700.0,
+      "funding_cost": 765.0849315068493,
+      "peak_funding_need": 131400.0,
+      "closing_cash_before_interest": 78600.0,
+      "residual_funding_need": 0.0
+    }
+  ],
+  "sensitivity": [
+    {
+      "port_delay_days": 0,
+      "annual_funding_rate": 0.03,
+      "stock_cover_days": 8,
+      "lowest_burden_option": "priority_sea",
+      "minimum_economic_burden": 9062.98904109589
+    },
+    {
+      "port_delay_days": 0,
+      "annual_funding_rate": 0.03,
+      "stock_cover_days": 12,
+      "lowest_burden_option": "standard_sea",
+      "minimum_economic_burden": 3886.3232876712327
+    },
+    {
+      "port_delay_days": 0,
+      "annual_funding_rate": 0.03,
+      "stock_cover_days": 18,
+      "lowest_burden_option": "standard_sea",
+      "minimum_economic_burden": 3886.3232876712327
+    },
+    {
+      "port_delay_days": 0,
+      "annual_funding_rate": 0.08,
+      "stock_cover_days": 8,
+      "lowest_burden_option": "priority_sea",
+      "minimum_economic_burden": 9501.30410958904
+    },
+    {
+      "port_delay_days": 0,
+      "annual_funding_rate": 0.08,
+      "stock_cover_days": 12,
+      "lowest_burden_option": "standard_sea",
+      "minimum_economic_burden": 4363.528767123287
+    },
+    {
+      "port_delay_days": 0,
+      "annual_funding_rate": 0.08,
+      "stock_cover_days": 18,
+      "lowest_burden_option": "standard_sea",
+      "minimum_economic_burden": 4363.528767123287
+    },
+    {
+      "port_delay_days": 0,
+      "annual_funding_rate": 0.15,
+      "stock_cover_days": 8,
+      "lowest_burden_option": "priority_sea",
+      "minimum_economic_burden": 10114.945205479453
+    },
+    {
+      "port_delay_days": 0,
+      "annual_funding_rate": 0.15,
+      "stock_cover_days": 12,
+      "lowest_burden_option": "standard_sea",
+      "minimum_economic_burden": 5031.6164383561645
+    },
+    {
+      "port_delay_days": 0,
+      "annual_funding_rate": 0.15,
+      "stock_cover_days": 18,
+      "lowest_burden_option": "standard_sea",
+      "minimum_economic_burden": 5031.6164383561645
+    },
+    {
+      "port_delay_days": 2.5,
+      "annual_funding_rate": 0.03,
+      "stock_cover_days": 8,
+      "lowest_burden_option": "priority_sea",
+      "minimum_economic_burden": 15089.742465753425
+    },
+    {
+      "port_delay_days": 2.5,
+      "annual_funding_rate": 0.03,
+      "stock_cover_days": 12,
+      "lowest_burden_option": "priority_sea",
+      "minimum_economic_burden": 5489.742465753425
+    },
+    {
+      "port_delay_days": 2.5,
+      "annual_funding_rate": 0.03,
+      "stock_cover_days": 18,
+      "lowest_burden_option": "standard_sea",
+      "minimum_economic_burden": 3912.7479452054795
+    },
+    {
+      "port_delay_days": 2.5,
+      "annual_funding_rate": 0.08,
+      "stock_cover_days": 8,
+      "lowest_burden_option": "priority_sea",
+      "minimum_economic_burden": 15572.646575342465
+    },
+    {
+      "port_delay_days": 2.5,
+      "annual_funding_rate": 0.08,
+      "stock_cover_days": 12,
+      "lowest_burden_option": "priority_sea",
+      "minimum_economic_burden": 5972.646575342465
+    },
+    {
+      "port_delay_days": 2.5,
+      "annual_funding_rate": 0.08,
+      "stock_cover_days": 18,
+      "lowest_burden_option": "standard_sea",
+      "minimum_economic_burden": 4433.994520547945
+    },
+    {
+      "port_delay_days": 2.5,
+      "annual_funding_rate": 0.15,
+      "stock_cover_days": 8,
+      "lowest_burden_option": "priority_sea",
+      "minimum_economic_burden": 16248.712328767124
+    },
+    {
+      "port_delay_days": 2.5,
+      "annual_funding_rate": 0.15,
+      "stock_cover_days": 12,
+      "lowest_burden_option": "priority_sea",
+      "minimum_economic_burden": 6648.712328767124
+    },
+    {
+      "port_delay_days": 2.5,
+      "annual_funding_rate": 0.15,
+      "stock_cover_days": 18,
+      "lowest_burden_option": "standard_sea",
+      "minimum_economic_burden": 5163.739726027397
+    },
+    {
+      "port_delay_days": 7,
+      "annual_funding_rate": 0.03,
+      "stock_cover_days": 8,
+      "lowest_burden_option": "sea_road",
+      "minimum_economic_burden": 19305.806849315068
+    },
+    {
+      "port_delay_days": 7,
+      "annual_funding_rate": 0.03,
+      "stock_cover_days": 12,
+      "lowest_burden_option": "sea_road",
+      "minimum_economic_burden": 9705.806849315068
+    },
+    {
+      "port_delay_days": 7,
+      "annual_funding_rate": 0.03,
+      "stock_cover_days": 18,
+      "lowest_burden_option": "priority_sea",
+      "minimum_economic_burden": 5537.898630136986
+    },
+    {
+      "port_delay_days": 7,
+      "annual_funding_rate": 0.08,
+      "stock_cover_days": 8,
+      "lowest_burden_option": "sea_road",
+      "minimum_economic_burden": 19815.48493150685
+    },
+    {
+      "port_delay_days": 7,
+      "annual_funding_rate": 0.08,
+      "stock_cover_days": 12,
+      "lowest_burden_option": "sea_road",
+      "minimum_economic_burden": 10215.48493150685
+    },
+    {
+      "port_delay_days": 7,
+      "annual_funding_rate": 0.08,
+      "stock_cover_days": 18,
+      "lowest_burden_option": "priority_sea",
+      "minimum_economic_burden": 6101.06301369863
+    },
+    {
+      "port_delay_days": 7,
+      "annual_funding_rate": 0.15,
+      "stock_cover_days": 8,
+      "lowest_burden_option": "sea_road",
+      "minimum_economic_burden": 20529.034246575342
+    },
+    {
+      "port_delay_days": 7,
+      "annual_funding_rate": 0.15,
+      "stock_cover_days": 12,
+      "lowest_burden_option": "sea_road",
+      "minimum_economic_burden": 10929.034246575342
+    },
+    {
+      "port_delay_days": 7,
+      "annual_funding_rate": 0.15,
+      "stock_cover_days": 18,
+      "lowest_burden_option": "priority_sea",
+      "minimum_economic_burden": 6889.493150684932
+    }
+  ],
+  "document_evidence": {
+    "scope": "8 deliberately constructed fixtures, not a real-document accuracy benchmark",
+    "consistency_fixtures": [
+      {
+        "test_case": "Original constructed bundle",
+        "expected_consistent": true,
+        "observed_consistent": true,
+        "matches_fixture_expectation": true,
+        "issue_codes": []
+      },
+      {
+        "test_case": "Invoice total altered",
+        "expected_consistent": false,
+        "observed_consistent": false,
+        "matches_fixture_expectation": true,
+        "issue_codes": [
+          "INVOICE_ARITHMETIC",
+          "CARGO_VALUE_MISMATCH"
+        ]
+      },
+      {
+        "test_case": "Different order identifier",
+        "expected_consistent": false,
+        "observed_consistent": false,
+        "matches_fixture_expectation": true,
+        "issue_codes": [
+          "CROSS_DOCUMENT_MISMATCH"
+        ]
+      },
+      {
+        "test_case": "Currency mismatch",
+        "expected_consistent": false,
+        "observed_consistent": false,
+        "matches_fixture_expectation": true,
+        "issue_codes": [
+          "CROSS_DOCUMENT_MISMATCH"
+        ]
+      },
+      {
+        "test_case": "Requested value inconsistent with multiplier",
+        "expected_consistent": false,
+        "observed_consistent": false,
+        "matches_fixture_expectation": true,
+        "issue_codes": [
+          "INSURED_VALUE_MISMATCH"
+        ]
+      },
+      {
+        "test_case": "Departure outside requested window",
+        "expected_consistent": false,
+        "observed_consistent": false,
+        "matches_fixture_expectation": true,
+        "issue_codes": [
+          "DEPARTURE_OUTSIDE_COVER_WINDOW"
+        ]
+      },
+      {
+        "test_case": "Packing quantity mismatch",
+        "expected_consistent": false,
+        "observed_consistent": false,
+        "matches_fixture_expectation": true,
+        "issue_codes": [
+          "SKU_QUANTITY_MISMATCH"
+        ]
+      },
+      {
+        "test_case": "Missing unit price",
+        "expected_consistent": false,
+        "observed_consistent": false,
+        "matches_fixture_expectation": true,
+        "issue_codes": [
+          "INVALID_NUMBER"
+        ]
+      }
+    ],
+    "signature_demonstration": [
+      {
+        "test_case": "Original",
+        "signature_valid": true,
+        "issuer_key_matches_anchor": true,
+        "accepted_demo_signature": true,
+        "document_truth_verified": false
+      },
+      {
+        "test_case": "Amount tampered",
+        "signature_valid": false,
+        "issuer_key_matches_anchor": false,
+        "accepted_demo_signature": false,
+        "document_truth_verified": false
+      },
+      {
+        "test_case": "Re-signed with replacement key",
+        "signature_valid": true,
+        "issuer_key_matches_anchor": false,
+        "accepted_demo_signature": false,
+        "document_truth_verified": false
+      }
+    ]
+  }
+}

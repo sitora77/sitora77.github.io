@@ -1,0 +1,17 @@
+{
+  "data_status": "Entirely constructed JSON fixtures; no real customer or company documents.",
+  "invoice": {
+    "document_id": "DEMO-INV-001", "order_id": "DEMO-SG-001", "currency": "USD",
+    "departure_date": "2024-05-20", "total_value": 150000,
+    "items": [{"sku": "DEMO-ELECTRONIC", "quantity": 5000, "unit_price": 30}]
+  },
+  "packing_list": {
+    "document_id": "DEMO-PACK-001", "order_id": "DEMO-SG-001", "currency": "USD",
+    "items": [{"sku": "DEMO-ELECTRONIC", "quantity": 5000}]
+  },
+  "insurance_application": {
+    "document_id": "DEMO-INS-001", "order_id": "DEMO-SG-001", "currency": "USD",
+    "cargo_value": 150000, "valuation_multiplier": 1.1, "requested_insured_value": 165000,
+    "cover_start": "2024-05-19", "cover_end": "2024-06-30"
+  }
+}
