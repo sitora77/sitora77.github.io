@@ -44,6 +44,7 @@
       rows.forEach(r => {const o = document.createElement('option'); o.value = r.option_id; o.textContent = r.option; select.appendChild(o);});
       if (rows.some(r => r.option_id === previous)) select.value = previous;
       drawLedger();
+      document.getElementById('current-result').textContent = JSON.stringify({data_status: 'Constructed assumptions, not observed savings', inputs: current, comparison: rows}, null, 2);
       status.textContent = '已按当前假设重新计算 · 本机浏览器计算，无需上传资料';
       document.getElementById('download-case').disabled = false;
     } catch (error) {
@@ -56,7 +57,11 @@
   document.getElementById('download-case').addEventListener('click', () => {
     const blob = new Blob([JSON.stringify({data_status: 'Constructed assumptions, not observed savings', inputs: current, comparison: rows}, null, 2)], {type: 'application/json'});
     const url = URL.createObjectURL(blob), a = document.createElement('a');
-    a.href = url; a.download = 'harborshield-case-result.json'; a.click(); URL.revokeObjectURL(url);
+    a.href = url; a.download = 'harborshield-case-result.json';
+    document.body.appendChild(a); a.click();
+    status.textContent = '已请求下载；若浏览器未开始下载，可展开 JSON 结果复制保存。';
+    // Keep the URL alive while browsers resolve the download navigation.
+    setTimeout(() => {a.remove(); URL.revokeObjectURL(url);}, 30000);
   });
   document.getElementById('reset-case').addEventListener('click', () => {
     const defaults = [fixture.selected_port_delay_days, fixture.order.stock_cover_days,
